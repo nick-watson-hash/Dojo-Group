@@ -1,0 +1,13 @@
+var x = 1
+
+while (x <= 19){
+    console.log(x);
+    x=x+2;
+}
+
+let sum = 0;
+
+for(let num = 1; num <= 5;  num++) {
+    sum = num + sum
+    console.log(num, sum)
+}

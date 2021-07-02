@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>jQuery Functions</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+</head>
+    <body>  
+        <div id="center_mass">
+            <div class="center_box">
+                <h1>AddClass</h1>
+                <p id="addclass"><button id="addclass">AddClass</button>Click the button to add class 'red' to this paragraph</p>
+            </div>      
+            <div class="center_box">
+                <h1>Slidetoggle</h1>
+                <button id="slidetoggle">Slidetoggle</button>
+                <p id="slidetoggle">Click the button to slidetoggle a hidden image</p>
+            </div>
+            <div class="center_box">
+                <h1>Append</h1>
+                <button id="append">Append</button>
+                <p id="append">Click the button to append a new paragaph</p>
+            </div>
+            <div class="center_box">
+                <h1>Click</h1>
+                <button id="click">Click</button>
+                <p id="click">Click the button to append a new paragaph</p>
+            </div>
+            <div class="center_box">
+                <h1>Hide</h1>
+                <button id="hide">Hide</button>
+                <p id="hide">Click the button to append a new paragaph</p>
+            </div>
+            <div class="center_box">
+                <h1>Show</h1>
+                <button id="show">Show</button>
+                <p id="show">Click the button to append a new paragaph</p>
+            </div>
+            <div class="center_box">
+                <h1>Toggle</h1>
+                <button id="toggle">Toggle</button>
+                <p id="toggle">Click the button to append a new paragaph</p>
+            </div>
+            <div class="center_box">
+                <h1>Slidedown</h1>
+                <button id="slidedown">Slidedown</button>
+                <p id="slidedown">Click the button to append a new paragaph</p>
+            </div>
+            <div class="center_box"
+                <h1>Slideup</h1>
+                <button id="slideup">Slideup</button>
+                <p id="slideup"></p>>Click the button to append a new paragaph</p>
+            </div>
+            <div class="center_box">
+                <h1>FadeIn</h1>
+                <button id="fadein">FadeIn</button>
+                <p id="fadein">Click the button to append a new paragaph</p>
+            </div>
+            <div class="center_box">
+                <h1>Fadeout</h1>
+                <button id="fadeout">Fadeout</button>
+                <p id="fadeout">Click the button to append a new paragaph</p>
+            </div>
+            <div class="center_box">
+                <h1>Before</h1>
+                <button id="before">Before</button>
+                <p id="before">Click the button to append a new paragaph</p>
+            </div>
+            <div class="center_box">
+                <h1>After</h1>
+                <button id="after">After</button>
+                <p id="after">Click the button to append a new paragaph</p>
+            </div>
+            <div class="center_box">
+                <h1>Html</h1>
+                <button id="html">Html</button>
+                <p id="html">Click the button to append a new paragaph</p>
+            </div>
+            <div class="center_box">
+                <h1>Attr</h1>
+                <button id="attr">Attr</button>
+                <p id="attr">Click the button to append a new paragaph</p>
+            </div>
+            <div class="center_box">
+                <h1>Val</h1>
+                <button id="val">Val</button>
+                <p id="val">Click the button to append a new paragaph</p>
+            </div>
+            <div class="center_box">
+                <h1>Text</h1>
+                <button id="text">Text</button>
+                <p id="text">Click the button to append a new paragaph</p>
+            </div>
+        </div>   
+              
+        <script>
+            $("#addclass").click(function(){
+                $("#addclass").addClass('red')
+            });
+            $("#slidetoggle").click(function(){
+                $("#slidetoggle").slideToggle("slow");
+            });
+            $("#append").click(function(){
+                $("#append").append(document.createTextNode("Hello"));
+            });
+            $("#click").click(function(){
+                alert("HANDLER FOR .click CALLED.");
+            });
+             $("#hide").click(function(){
+                $('#hide').hide();
+            });
+            $("#show").click(function(){
+                $("#show").show("slow");
+            });
+             $("#toggle").click(function(){
+                $("#toggle").toggle("slow");
+            });
+            $("#slidedown").click(function(){
+                $("#slidedown").slideDown("slow");
+            });
+            $("#slideup").click(function(){
+                $("#slideup").slideUp("slow");
+            });
+           $("#fadein").click(function(){
+                $("#fadein").fadeIn("slow");
+            });
+            $('#fadeout').click(function(){
+                $('#fadeout').fadeOut("slow");
+            });
+             $('#before').click(function(){
+                $('#before').before("<b>Hello</b>");
+            });
+            $('#after').click(function(){
+                $('#after').after("<b>Hello</b>");
+            });
+            $('#html').click(function(){
+                $('#html').html("<br>Hello Again</br>");
+            });
+   /*        $('button, #attr').click(function(){
+               var example = $("red").attr(example)
+                $('#attr').text(example);
+            }); 
+             $('button, #val').click(function(){
+                var text = $(this).text();
+                $('purple').val('text')
+            }); */
+            $('#text').click(function(){
+                $('#text').text('New new text');
+            }); 
+        </script>
+    </body>
+</html>

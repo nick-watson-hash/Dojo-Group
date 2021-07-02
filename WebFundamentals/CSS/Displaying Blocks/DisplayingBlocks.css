@@ -1,0 +1,23 @@
+*{ 
+    margin: 0px;
+    padding: 0px;
+   }
+
+   #wrapper {
+    width: 800px;
+    height: 800px;
+    margin: 0 auto;
+    background-color: #d3d1ad;
+   
+}
+
+   #header{
+
+   }
+   #main_content{
+       display: inline-block;
+   }
+
+   .subcontents{
+
+   }

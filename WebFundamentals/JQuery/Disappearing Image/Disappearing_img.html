@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Disappearing Image</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+</head>
+<body>
+    <div id="center_mass">
+        <div class="image_box">
+        <img id="ninja0" src="./images/dis1.png" alt="The disappearing image">
+        </div>
+        <div class="image_box">
+        <img id="ninja1" src="./images/dis1.png" alt="The disappearing image">
+        </div>
+        <div class="image_box">
+        <img id="ninja2" src="./images/dis1.png" alt="The disappearing image">
+        </div>
+        <div class="image_box">
+        <img id="ninja3" src="./images/dis1.png" alt="The disappearing image">
+        </div>
+        <div class="image_box">
+        <img id="ninja4" src="./images/dis1.png" alt="The disappearing image">
+        </div>
+        <div class="image_box">
+        <img id="ninja5" src="./images/dis1.png" alt="The disappearing image">
+        </div>
+        <div class="image_box">
+        <img id="ninja6" src="./images/dis1.png" alt="The disappearing image">
+        </div>
+        <div class="image_box">
+        <img id="ninja7" src="./images/dis1.png" alt="The disappearing image">
+        </div>
+        <div class="image_box">
+        <img id="ninja8" src="./images/dis1.png" alt="The disappearing image">
+        </div> 
+    </div>
+    <button id="restorebut">Restore</button>  
+</body>
+
+<script>
+$('#ninja0').click(function(){
+    $('#ninja0').fadeOut("slow");
+});
+$('#ninja1').click(function(){
+        $('#ninja1').fadeOut("slow");
+});
+$('#ninja2').click(function(){
+        $('#ninja2').fadeOut("slow");
+});
+$('#ninja3').click(function(){
+        $('#ninja3').fadeOut("slow");
+});
+$('#ninja4').click(function(){
+        $('#ninja4').fadeOut("slow");
+});
+$('#ninja5').click(function(){
+        $('#ninja5').fadeOut("slow");
+});
+$('#ninja6').click(function(){
+        $('#ninja6').fadeOut("slow");
+});
+$('#ninja7').click(function(){
+        $('#ninja7').fadeOut("slow");
+});
+$('#ninja8').click(function(){
+        $('#ninja8').fadeOut("slow");
+});
+    $('#restorebut').click(function(){
+        $('img').fadeIn("slow");
+});
+</script>
+
+</html>

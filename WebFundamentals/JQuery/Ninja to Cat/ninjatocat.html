@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ninja to Cat</title>
+    <link rel="stylesheet" type="text/css" href="styles.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+</head>
+<body>
+    <div id="center_mass">
+        <div class="puzzlepiece">
+            <img id="top" src="./img/cat0.png" data-alt-src="./img/ninja0.png" alt="This is a part of the puzzle">
+        </div>
+        <div class="puzzlepiece">
+            <img id="topmid" src="./img/cat1.png" data-alt-src="./img/ninja1.png" alt="This is a part of the puzzle">
+        </div>
+        <div class="puzzlepiece">
+            <img id="mid" src="./img/cat2.png" data-alt-src="./img/ninja2.png" alt="This is a part of the puzzle">
+        </div>
+        <div class="puzzlepiece">
+            <img id="botmid" src="./img/cat3.png" data-alt-src="./img/ninja3.png" alt="This is a part of the puzzle">
+        </div>
+        <div class="puzzlepiece">
+            <img id="bot" src="./img/cat4.png" data-alt-src="./img/ninja4.png" alt="This is a part of the puzzle">
+        </div>
+    </div>
+
+<script>
+    $(document).ready(function(){
+        $('img').click(function() {
+            console.log('data-alt-src value is', $(this).attr('data-alt-src'));
+    });
+        $('#top').click(function() {
+            $(this).attr('src','./img/ninja0.png');
+    });
+        $('#topmid').click(function() {
+            $(this).attr('src','./img/ninja1.png');
+    });
+        $('#mid').click(function() {
+            $(this).attr('src','./img/ninja2.png');
+    });
+        $('#botmid').click(function() {
+            $(this).attr('src','./img/ninja3.png');
+    });
+        $('#bot').click(function() {
+            $(this).attr('src','./img/ninja4.png');
+    });
+});
+</script>
+</body>
+</html>
