@@ -1,0 +1,48 @@
+Last login: Mon Jun 28 13:53:56 on console
+nick@Nicks-iMac ~ % cd desktop
+nick@Nicks-iMac desktop % mkdir test
+nick@Nicks-iMac desktop % touch index.html
+nick@Nicks-iMac desktop % touch styles.css
+nick@Nicks-iMac desktop % touch commands.txt
+nick@Nicks-iMac desktop % mv index.html ./test
+nick@Nicks-iMac desktop % mv styles.css ./test
+nick@Nicks-iMac desktop % mv commands.txt ./test
+nick@Nicks-iMac desktop % cd test
+nick@Nicks-iMac test % ls
+commands.txt	index.html	styles.css
+nick@Nicks-iMac test % mg index.html index2.html
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+--**-Mg: index2.html                      (fundamental)--L11--------------------
+
+
+
+
+
+
+
+
+
+
+
+-----Mg: index.html                       (fundamental)--L1---------------------
+End of buffer

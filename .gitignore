@@ -35,6 +35,7 @@
 .Trashes
 ehthumbs.db
 Thumbs.db
+python_stack/my_environments/djangoPy3Env/
 python_stack/my_environments/py3Env/pyvenv.cfg
 python_stack/my_environments/py3Env/bin/activate
 python_stack/my_environments/py3Env/bin/activate.csh

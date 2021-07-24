@@ -1,0 +1,5 @@
+{
+    "python.analysis.extraPaths": [
+        "./python_stack/_python/OOP/modularizing"
+    ]
+}
