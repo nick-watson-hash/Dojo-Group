@@ -1,0 +1,44 @@
+*{ 
+    margin: 0px;
+    padding: 0px;
+   }
+
+   body {
+    margin: 0px auto;
+    height: 100%;
+    width: 60%;
+
+   }
+
+   .center_mass {
+       height: 80%;
+       width: 80%;
+       display: flex;
+       flex-wrap: wrap;
+       align-items: center;
+       justify-content: center;
+       flex-direction: column;
+       border: solid 2px black;
+       padding: 30px;
+       margin: 30px;
+   }
+
+   #bottom_mass {
+    height: 80%;
+    width: 80%;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    border: solid 2px black;
+    padding: 30px;
+}
+
+   h2 {
+       padding-bottom: 1%;
+   }
+
+   p {
+       padding-bottom: 1%;
+   }
