@@ -6,4 +6,4 @@ def randInt(min=0, max=100 ):
 print(randInt())
 print(randInt(max=78))
 print(randInt(min=25))
-print(randInt(min=2, max=50))
+print(randInt(min=2, max=50))  # Fix edge cases 

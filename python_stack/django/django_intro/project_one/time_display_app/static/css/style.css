@@ -1,0 +1,35 @@
+*{ 
+    margin: 0px;
+    padding: 0px;
+   }
+
+   body {
+    margin: 0px auto;
+    height: 100%;
+    width: 800px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: column;
+   }
+
+   div {
+       margin-top: 100px;
+   }
+
+#topbox{
+    height: 5%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid black;
+}
+
+#botbox{
+    height: 25%;
+    width: 35%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid black;
+}

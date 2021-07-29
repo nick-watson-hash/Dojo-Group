@@ -1,0 +1,31 @@
+*{ 
+    margin: 0px;
+    padding: 0px;
+   }
+
+   body {
+    margin: 0px auto;
+    height: 100%;
+    width: 800px;
+    margin-top: 10%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    border: solid 2px black;
+   }
+
+   #center_mass {
+       height: 80%;
+       width: 80%;
+       padding-bottom: 115px;
+   }
+
+   #center_mass p {
+       padding-top: 40px;
+       padding-bottom: 10px;
+   } 
+
+   textarea {
+       height: 40%;
+       width: 60%;
+   }
