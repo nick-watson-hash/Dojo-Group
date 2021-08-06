@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Index</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <div id="body_box">
+        <table>
+            <caption>
+                <h1>All the users</h1>
+            </caption>
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>First name</th>
+                <th>Last name</th>
+                <th>Email</th>
+                <th>Age</th>
+              </tr>
+            </thead>
+            <tbody>
+                {% for x in table_data %}
+              <tr>
+                <td>{{x.id}}</td>
+                <td>{{x.first_name}}</td>
+                <td>{{x.last_name}}</td>
+                <td>{{x.email_address}}</td>
+                <td>{{x.years_old}}</td>
+              </tr>
+                {% endfor %}
+            </tbody>
+          </table>
+    </div>
+    <hr>
+    <form action="/process" method="POST">
+        {% csrf_token %}
+        <p>First Name: <input name="one" type="text"></p>
+        <p>Last Name: <input name="two" type="text"></p>
+        <p>Email: <input name="three" type="text"></p>
+        <p>Age: <input name="four" type="number"></p>
+        <button type="submit">Add</button>
+      </form>
+</body>
+</html>
