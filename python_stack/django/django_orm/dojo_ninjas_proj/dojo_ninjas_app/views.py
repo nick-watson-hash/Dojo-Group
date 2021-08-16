@@ -3,16 +3,30 @@ from dojo_ninjas_app.models import *
 
 # Create your views here.
 def index(request):
-    return render(request, 'index.html',{'table_data': Ninjas.objects.all()})
+    context = {
+        'all_ninjas' : Ninjas.objects.all(),
+        'all_dojos' : Dojos.objects.all()
+    }
+    return render(request, 'index.html', context)
 
-def process(request):
+def process_ninja(request):
     if request.method != 'POST':
         return redirect('/')
-    elif request.method == 'POST':
+    else:
         Ninjas.objects.create(
-            first_name = request.POST['one'],
-            last_name = request.POST['two'],
-            email_address = request.POST['three'],
-            years_old = request.POST['four'],
+            first_name = request.POST['ninja_first'],
+            last_name = request.POST['ninja_last'],
+            dojo_id = request.POST['ninja_dojo']
+        )
+        return redirect('/')
+
+def process_dojo(request):
+    if request.method != 'POST':
+        return redirect('/')
+    else:
+        Dojos.objects.create(
+            name = request.POST['dojo_name'] ,
+            city = request.POST['dojo_city'],
+            state = request.POST['dojo_state']
         )
         return redirect('/')

@@ -9,17 +9,35 @@ body {
     width: 800px;
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    flex-direction: column; 
+    flex-direction: column;
+    overflow: scroll;
    }
 
-#body_box{
+#body_box {
     height: 5%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    border: 2px solid black;
+    margin-top: 15%;
+}
+
+#submit_box {
+    height: 5%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 3%;
+}
+
+#bot_box {
+    height: 500px;
+    width: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
     border: 2px solid black;
-    margin-top: 25%;
 }
 
 table {
@@ -30,13 +48,17 @@ table {
     line-height: 1.50em;
 }
 
+form {
+    padding: 5%;
+}
+
 td {
     border: 1px solid black;
     padding: 1em;
 }
 
-hr { 
-    width: 100%;
+hr {
+    width: 200%;
     display: block;
     margin-top: 5%;
     border-width: 1px;

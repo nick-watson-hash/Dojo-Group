@@ -8,7 +8,8 @@ class Dojos(models.Model):
     desc = models.TextField(null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    
+    #ninja 
+
 class Ninjas(models.Model):
     first_name = models.CharField(max_length=255)
     last_name = models.CharField(max_length=255)

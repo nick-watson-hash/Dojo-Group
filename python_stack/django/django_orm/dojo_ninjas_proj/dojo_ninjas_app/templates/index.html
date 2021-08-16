@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -8,42 +9,69 @@
     {% load static %}
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
+
 <body>
     <div id="body_box">
         <table>
             <caption>
-                <h1>All the users</h1>
+                <h1>All the ninjas</h1>
             </caption>
             <thead>
-              <tr>
-                <th>ID</th>
-                <th>First name</th>
-                <th>Last name</th>
-                <th>Email</th>
-                <th>Age</th>
-              </tr>
+                <tr>
+                    <th>ID</th>
+                    <th>First name</th>
+                    <th>Last name</th>
+                    <th>Email</th>
+                    <th>Age</th>
+                    <th>Dojo Name</th>
+                </tr>
             </thead>
             <tbody>
-                {% for x in table_data %}
-              <tr>
-                <td>{{x.id}}</td>
-                <td>{{x.first_name}}</td>
-                <td>{{x.last_name}}</td>
-                <td>{{x.email_address}}</td>
-                <td>{{x.years_old}}</td>
-              </tr>
+                {% for ninja in all_ninjas %}
+                <tr>
+                    <td>{{ninja.id}}</td>
+                    <td>{{ninja.first_name}}</td>
+                    <td>{{ninja.last_name}}</td>
+                    <td>{{ninja.email_address}}</td>
+                    <td>{{ninja.years_old}}</td>
+                    <td>{{ninja.dojo.name}}</td>
+                </tr>
                 {% endfor %}
             </tbody>
-          </table>
+        </table>
     </div>
     <hr>
-    <form action="/process" method="POST">
-        {% csrf_token %}
-        <p>First Name: <input name="one" type="text"></p>
-        <p>Last Name: <input name="two" type="text"></p>
-        <p>Email: <input name="three" type="text"></p>
-        <p>Age: <input name="four" type="number"></p>
-        <button type="submit">Add</button>
-      </form>
+    <div id="submit_box">
+        <form action="/process-dojo" method="POST">
+            {% csrf_token %}
+            <h1>Add a Dojo</h1>
+            <p>Name: </p><input name="dojo_name" type="text">
+            <p>City: </p><input name="dojo_city" type="text">
+            <p>State: </p><input name="dojo_state" type="text">
+            <button type="submit">Add</button>
+        </form>
+        <form action="/process-ninja" method="POST">
+            {% csrf_token %}
+            <h1>Add a Ninja</h1>
+            <p>First Name: </p><input name="ninja_first" type="text">
+            <p>Last Name: </p><input name="ninja_last" type="text">
+            <p>Dojo: </p><input name="ninja_dojo" type="number">
+            <button type="submit">Add</button>
+        </form>
+    </div>
+    <hr>
+    <h1>All the Dojos</h1>
+    <div id="bot_box">
+        <ol>
+            {% for dojo in all_dojos %}
+            <li>Ninjas at the {{dojo.name}} dojo</li>
+                <ol>
+                    {% for ninja in dojo.ninja.all %}
+                    <li>{{ninja.first_name}} {{ninja.last_name}}</li>
+                    {% endfor %}
+                </ol>
+            {% endfor %}
+    </div>
 </body>
+
 </html>
