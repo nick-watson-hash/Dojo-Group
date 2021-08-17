@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Semi-Restful TV Shows</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <div class="center_mass">
+        <form action="shows/<int:show_id>/update" method="POST">
+            {% csrf_token %}
+            <h1>Edit Show {{shows.id}}</h1>
+            <p>Title: </p><input name="title" type="text">
+            <p>Network: </p><input name="network" type="text">
+            <p>Release Date: </p><input name="release_date" type="date">
+            <p>Description: </p><input name="desc" type="text">
+            <button type="submit">Update</button>
+            <td><a href='/shows/{{queried_show.id}}/show' type="submit">Go to show</a>
+    </div>
+
+
+</body>
+</html>

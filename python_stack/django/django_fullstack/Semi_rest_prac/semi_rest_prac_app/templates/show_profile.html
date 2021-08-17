@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Semi-Restful TV Show</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <div class="center_mass">
+        <h1>TV Show {{queried_show.id}}</h1>
+        <p>Title: {{queried_show.title}}</p>
+        <p>Network: {{queried_show.network}}</p>
+        <p>Release Date: {{queried_show.release_date}}</p>
+        <p>Description: {{queried_show.desc}}</p>
+        <a href='/shows/{{queried_show.id}}/edit' type="submit">Edit</a>
+        <a href='/shows/{{queried_show.id}}/destroy' type="submit">Delete</a>
+    </div>
+
+
+</body>
+</html>

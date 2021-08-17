@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Semi-Restful TV Shows</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <div class="center_mass">
+        <form action="/shows/create" method="POST">
+            {% csrf_token %}
+            <h1>Add a new show</h1>
+            <p>Title: </p><input name="title" type="text">
+            <p>Network: </p><input name="network" type="text">
+            <p>Release Date: </p><input name="release_date" type="date">
+            <p>Description: </p><input name="desc" type="text">
+            <button type="submit">Create</button>
+        </form>
+    </div>
+</body>
+</html>
