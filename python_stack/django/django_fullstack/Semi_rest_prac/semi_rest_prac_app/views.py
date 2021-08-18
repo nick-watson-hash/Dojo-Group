@@ -10,7 +10,7 @@ def index(request):
     return render(request, "index.html", context)
 
 def new_show(request):
-        return render(request, "new_show.html")
+        return render(request, "new_show.html") 
 
 def create_show(request):
     if request.method != "POST":
