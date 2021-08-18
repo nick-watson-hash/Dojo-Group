@@ -10,6 +10,13 @@
 </head>
 <body>
     <div class="center_mass">
+        {% if messages %}
+        <ul class="messages">
+        {% for message in messages %}
+        <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+        </ul>
+        {% endif %}
         <form action="/shows/create" method="POST">
             {% csrf_token %}
             <h1>Add a new show</h1>

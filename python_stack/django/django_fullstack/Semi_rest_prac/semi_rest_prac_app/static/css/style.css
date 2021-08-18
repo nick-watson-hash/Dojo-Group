@@ -10,16 +10,16 @@ body {
 }
 
 .center_mass {
-       height: 80%;
-       width: 80%;
-       display: flex;
-       flex-wrap: wrap;
-       align-items: center;
-       justify-content: center;
-       flex-direction: column;
-       border: solid 2px black;
-       padding: 30px;
-       margin: 30px;
+    height: 80%;
+    width: 80%;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    border: solid 2px black;
+    padding: 30px;
+    margin: 30px;
 }
 
 table {
