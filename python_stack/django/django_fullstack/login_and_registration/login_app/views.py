@@ -23,7 +23,7 @@ def create(request):
             first_name = request.POST['first_name'],
             last_name = request.POST['last_name'],
             email = request.POST['email'],
-            date_of_birth = request.POST['date_of_birth'],
+            date_of_birth = request.POST['birthdate'],
             password = new_passwordHash,
         )
         return redirect('/success')
