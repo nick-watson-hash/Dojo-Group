@@ -41,8 +41,6 @@ class UserManager(models.Manager):
             errors ['login_pass'] = "Incorrect email or password"
         return errors
 
-
-
 class Users(models.Model):
     first_name = models.CharField(max_length=255)
     last_name = models.CharField(max_length=255)

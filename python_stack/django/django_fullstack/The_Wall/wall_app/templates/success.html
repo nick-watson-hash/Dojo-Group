@@ -5,10 +5,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Success</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 <header>
-    <p>Welcome {{last_user}}</p>
-    <a href="/logout">Log Out</a>
+    <p>Welcome {{last_user.first_name}} <a href="/logout">Log Out</a></p>
     <h1><a href="/wall">Go to the Wall</a></h1>
 </header>
 <body>
@@ -24,6 +25,16 @@
             <input type="text" name='message'>
             <input type="submit">
         </form>
+    </div>
+    <div class='center_mass'>
+        <h1>Here is the history of your posts</h1>
+        <div class='center_mass'>
+            {% for post in user_messages %}
+            <div class='one_post'>
+                <p class='post'>{{post.message}}</p>
+            </div>
+            {% endfor %}
+        </div>
     </div>
 </body>
 </html>
