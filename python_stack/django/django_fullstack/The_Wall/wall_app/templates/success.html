@@ -32,9 +32,18 @@
             {% for post in user_messages %}
             <div class='one_post'>
                 <p class='post'>{{post.message}}</p>
+                <a href="/delete_message/{{post.id}}">Delete Message</a>
             </div>
             {% endfor %}
         </div>
     </div>
+    Edit User Form:
+    <form action="/success/{{last_user.id}}/edit_user" method=POST>
+        {% csrf_token %}
+        First Name: <input type="text" name='firstname' value={{last_user.first_name}}>
+        Last Name: <input type="text" name='lastname' value={{last_user.last_name}}>
+        Email: <input type="text" name='email' value={{last_user.email}}>
+        <input type="submit">
+    </form>
 </body>
 </html>

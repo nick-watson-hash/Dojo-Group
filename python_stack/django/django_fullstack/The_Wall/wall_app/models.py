@@ -37,9 +37,20 @@ class UserManager(models.Manager):
             errors ['login_pass'] = "Your password needs to be entered"
         if len(postData['login_pass']) < 8:
             errors ['login_pass'] = "An eight character password must be entered"
+        if not existing_users:
+            errors ['login_pass'] = "Incorrect email or password"
         elif bcrypt.checkpw(postData['login_pass'].encode(), existing_users[0].password.encode()) != True:
             errors ['login_pass'] = "Incorrect email or password"
         return errors
+
+    def postcomment_validator(self, postData):
+        errors = {}
+        if len(postData['message']) == 0:
+            errors['message'] = "You must enter some characters in order to leave a comment"
+        if len(postData['comment']) == 0:
+            errors['comment'] = "You must enter some characters in order to leave a comment"
+        return errors
+
 
 class Users(models.Model):
     first_name = models.CharField(max_length=255)

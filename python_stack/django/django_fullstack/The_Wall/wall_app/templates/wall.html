@@ -12,16 +12,22 @@
     <h1>Coding Dojo Wall</h1>
     <p>Welcome {{request.session.first_name}}</p>
     <a href="/logout">Log Out</a>
+    <br>
+    <a href="/success/{{last_user.id}}">Return to your success page</a>
+
 </header>
 <hr>
 <body>
     <div class='center_mass'>
-        <h1> This contains all of the posts</h1>
+        <h1> This page contains all of the posts & comments from all users</h1>
         {% for post in wall_messages %}
         <div class='one_post'>
             <p class='post'>{{post.message}}</p>
             <p class='poster'>By:{{post.user.first_name}} {{post.user.last_name}}</p>
-            <a href="/delete_message/{{post.id}}">Delete Message</a>
+            {% if post.user.id == request.session.user_id %}
+            <a href="/wall/{{post.id}}">Delete Message</a>
+            {% endif %}
+
             <form action="/add_comment/{{post.id}}" method=POST>
                 {% csrf_token %}
                 Comment: <input type="text" name='comment'>
@@ -30,7 +36,9 @@
             {% for comment in post.message_comments.all %}
             <p>{{comment.comment}}</p>
             <p>poster: {{comment.user.first_name}} {{comment.user.last_name}}</p>
+            {% if comment.user.id == request.session.user_id %}
             <a href="/delete_comment/{{comment.id}}">Delete Comment</a>
+            {% endif %}
             {% endfor %}
         </div>
         {% endfor %}

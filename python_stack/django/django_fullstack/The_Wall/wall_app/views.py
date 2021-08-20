@@ -5,8 +5,10 @@ import bcrypt
 # Create your views here.
 
 def wall(request):
+    recentUser = Users.objects.get(id = request.session['user_id'])
     context = {
         'wall_messages' : Message.objects.all(),
+        'last_user' : recentUser,
     }
     return render(request, 'wall.html', context)
 
@@ -80,4 +82,18 @@ def delete_comment(request, id):
 def delete_message(request, id):
     destroy = Message.objects.get(id=id)
     destroy.delete()
-    return redirect('/wall')
+    return redirect(f"/success/{request.session['user_id']}")
+
+def delete_message_wall(request, id):
+    destroy = Message.objects.get(id=id)
+    destroy.delete()
+    return redirect("/wall")
+
+
+def edit_user(request, id):
+    edit_user = Users.objects.get(id=id)
+    edit_user.first_name = request.POST['firstname']
+    edit_user.last_name = request.POST['lastname']
+    edit_user.email = request.POST['email']
+    edit_user.save()
+    return redirect(f"/success/{request.session['user_id']}")
