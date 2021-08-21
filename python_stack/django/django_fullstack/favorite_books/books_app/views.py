@@ -12,14 +12,21 @@ def books(request):
     context = {
         'all_users' : User.objects.all(),
         'all_books' : Book.objects.all(),
+        'currentUser' : User.objects.get(id=request.session['user_id'])
     }
     return render(request, 'books.html', context)
 
 def bookinfo(request, id):
     context = {
-        'specific_book' : Book.objects.get(id = id)
+        'specific_book' : Book.objects.get(id = id),
     }
     return render(request, 'bookinfo.html', context)
+
+def favoriteList(request, id):
+    context = {
+        'specific_user' : User.objects.get(id = id)
+    }
+    return render(request, 'user.html', context)
 
 def logout(request):
     request.session.flush()
@@ -71,6 +78,7 @@ def createBooks(request):
         new_book = Book.objects.create(
             title = request.POST['bookTitle'],
             desc = request.POST['bookDescription'],
+            creator = currentUser
         )
         currentUser.fav_book.add(new_book)
         currentUser.liked_book.add(new_book)
@@ -82,7 +90,12 @@ def deleteBook(request, id):
     return redirect('/books')
 
 def editBook(request, id):
+    errors = Book.objects.edit_validator(request.POST)
     edit_book = Book.objects.get(id=id)
+    if len(errors) > 0:
+        for key, value in errors.items():
+            messages.error(request, value)
+        return redirect(f'/books/{edit_book.id}')
     edit_book.desc = request.POST['bookDescriptionEdit']
     edit_book.save()
     return redirect(f'/books/{edit_book.id}')
@@ -90,11 +103,11 @@ def editBook(request, id):
 def addFavorite (request, book_id):
     currentUser = User.objects.get(id=request.session['user_id'])
     book = Book.objects.get(id = book_id)
-    currentUser.liked_book.add(book_id)
+    currentUser.liked_book.add(book)
     return redirect(f'/books/{book_id}')
 
 def unfavorite(request, book_id):
     currentUser = User.objects.get(id=request.session["user_id"])
     book = Book.objects.get(id=book_id)
-    currentUser.favorited_books.remove(book)
+    currentUser.liked_book.remove(book)
     return redirect(f'/books/{book_id}')

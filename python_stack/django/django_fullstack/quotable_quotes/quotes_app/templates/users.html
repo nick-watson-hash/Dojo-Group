@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Page</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<header>
+    <a href="/logout">Log Out</a>
+    <br>
+    <a href="/quotes">Dashboard</a>
+</header>
+<body>
+    <div class='center_mass'>
+        <p>Quotes posted by: {{specific_user.first_name}}</p>
+        <p> They currently have:{{specific_user.fav_quotes.count}} favorites  </p>
+        {% for post in specific_user.fav_quotes.all %}
+        <div class='one_post'>
+            <p class='post'>{{post.author}}</p>
+            <br>
+            <p class='post'>{{post.desc}}</p>
+        </div>
+        {% endfor %}
+    </div>
+</body>
+</html>

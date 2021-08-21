@@ -15,6 +15,13 @@
     <hr>
 </header>
 <body>
+    {% if messages %}
+    <ul>
+    {% for message in messages %}
+    <li>{{message}}</li>
+    {% endfor %}
+    </ul>
+    {% endif %}
     <div class='center_mass'>
         <h1>{{specific_book.title}}</h1>
         <h4>Added by:</h4><p>{{specific_book.creator.first_name}} {{specific_book.creator.last_name}}</p>
@@ -36,10 +43,15 @@
     <div class='center_mass'>
         <h1> Others who have also favorited this book</h1>
         <ul>
-            {% for user in book.liked_book.all %}
+            {% for user in specific_book.users_fav.all %}
             <li>{{user.first_name}} {{user.last_name}}</li>
             {% endfor %}
         </ul>
     </div>
+    <ul>
+        {% for book in book.users_fav.all %}
+        <li>{{book.title}} {{book.desc}}</li>
+        {% endfor %}
+    </ul>
 </body>
 </html>

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Quote Wall</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<header>
+    <h1>Quotable Quotes</h1>
+    <p>Welcome {{request.session.first_name}}</p>
+    <a href="/logout">Log Out</a>
+    <br>
+</header>
+<hr>
+<body>
+    <div class='center_mass'>
+        <h1>Contribute a quote</h1>
+        {% if messages %}
+        <ul>
+        {% for message in messages %}
+        <li>{{message}}</li>
+        {% endfor %}
+        </ul>
+        {% endif %}
+        <form action="/createquotes" method="POST">
+            {% csrf_token %}
+            <p>Quoted by: </p><input name="quoteAuthor" type="text">
+            <p>Message: </p><input name="quoteMessage" type="text">
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+    <div class='center_mass'>
+        <h1>Here are your favorite quotes</h1>
+        <div class='center_mass'>
+            {% for quote in all_quotes %}
+            {% if currentUser in quote.users_fav.all %}
+            <div class='one_post'>
+                <p class='post'><h3>Quote Originated by:</h3><h1>{{quote.author}}</h1></p>
+                <br>
+                <p class='post'><h3>Description:</h3>{{quote.desc}}</p>
+                <a href="/unfavorite/{{quote.id}}">Remove From Favorites</a>
+                {% if quote.creator.id == request.session.user_id %}
+                <br>
+                <a href="/delete/{{quote.id}}">Delete Quote</a>
+                <br>
+                <a href="/quotes/{{quote.id}}">Edit Quote</a>
+                {% endif %}
+            </div>
+            {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+    <div class='center_mass'>
+        <h1> Here are all of the quotes</h1>
+        {% for quote in all_quotes %}
+        {% if currentUser in quote.users_fav.all %}
+
+        {% else %}
+        <div class='one_post'>
+            <p class='post'><h3>Quote Originated by:</h3><h1>{{quote.author}}</h1></p>
+            <br>
+            <p class='post'><h3>Description:</h3>{{quote.desc}}</p>
+            <br>
+            <p class='post'>Posted by:<a href='/users/{{quote.creator.id}}'>{{quote.creator.first_name}}</a></p>
+            {% if currentUser in quote.users_fav.all %}
+            <br>
+            <p>This quote is already in your favorites</p>
+            <a href="/unfavorite/{{quote.id}}">Remove From Favorites</a>
+            {% else %}
+            <p>Would you like to add this to your favorites?</p>
+            <a href="/favorite/{{quote.id}}">Add to Favorites</a>
+            {% endif %}
+            {% if quote.creator.id == request.session.user_id %}
+            <br>
+            <a href="/delete/{{quote.id}}">Delete Quote</a>
+            <br>
+            <a href="/quotes/{{quote.creator.id}}">Edit Quote</a>
+            {% endif %}
+        </div>
+        {% endif %}
+        {% endfor %}
+    </div>
+</body>
+</html>

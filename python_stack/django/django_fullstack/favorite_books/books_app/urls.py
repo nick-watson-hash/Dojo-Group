@@ -13,5 +13,6 @@ urlpatterns = [
     path('edit/<int:id>', views.editBook),
     path('delete/<int:id>', views.deleteBook),
     path('favorite/<int:book_id>', views.addFavorite),
-    path('unfavorite/<int:book_id>', views.unfavorite)
+    path('unfavorite/<int:book_id>', views.unfavorite),
+    path('user/<int:id>', views.favoriteList)
 ]

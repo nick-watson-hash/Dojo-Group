@@ -40,25 +40,30 @@ class UserManager(models.Manager):
             errors ['login_pass'] = "Incorrect email or password"
         return errors
 
-    def book_validator(self, postData):
+class QuoteManager(models.Manager):
+    def quote_validator(self, postData):
         errors = {}
-        if len(postData['bookTitle']) == 0:
-            errors['bookTitle'] = "You must enter some characters in the title field"
-        if len(postData['bookDescription']) < 5:
-            errors['bookDescription'] = "The book description must be at least 5 characters"
-        if len(postData['bookDescription']) == 0:
-            errors['bookDescription'] = "You must enter some characters in the description field"
+        if len(postData['quoteAuthor']) == 0:
+            errors['quoteAuthor'] = "You must enter some characters in the author field"
+        if len(postData['quoteAuthor']) < 2:
+            errors['quoteAuthor'] = "You must enter some characters in the author field"
+        if len(postData['quoteMessage']) < 10:
+            errors['quoteMessage'] = "The quote description must be at least 10 characters"
+        if len(postData['quoteMessage']) == 0:
+            errors['quoteMessage'] = "You must enter some characters in the description field"
         return errors
 
     def edit_validator(self, postData):
         errors = {}
-        if len(postData['bookDescriptionEdit']) < 5:
-            errors['bookDescriptionEdit'] = "The book description must be at least 5 characters"
-        if len(postData['bookDescriptionEdit']) == 0:
-            errors['bookDescriptionEdit'] = "You must enter some characters in the description field"
+        if len(postData['quoteAuthorEdit']) == 0:
+            errors['quoteAuthorEdit'] = "You must enter some characters in the author field"
+        if len(postData['quoteAuthorEdit']) < 2:
+            errors['quoteAuthorEdit'] = "You must enter some characters in the author field"
+        if len(postData['quoteMessageEdit']) < 10:
+            errors['quoteMessageEdit'] = "The quote description must be at least 10 characters"
+        if len(postData['quoteMessageEdit']) == 0:
+            errors['quoteMessageEdit'] = "You must enter some characters in the description field"
         return errors
-        errors = {}
-
 
 class User(models.Model):
     first_name = models.CharField(max_length=45)
@@ -68,14 +73,14 @@ class User(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     objects = UserManager()
-    #fav_book
-    #liked_books
+    #quote_creator
+    #fav_quotes
 
-class Book(models.Model):
-    title = models.CharField(max_length=255)
+class Quote(models.Model):
+    author = models.CharField(max_length=255)
     desc = models.TextField(blank=True)
-    creator = models.ForeignKey(User, related_name="fav_book", on_delete=models.CASCADE, null=True)
-    users_fav = models.ManyToManyField(User, related_name="liked_book")
+    creator = models.ForeignKey(User, related_name="quote_creator", on_delete=models.CASCADE, null=True)
+    users_fav = models.ManyToManyField(User, related_name="fav_quotes")
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    objects = UserManager()
+    objects = QuoteManager()

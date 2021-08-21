@@ -40,7 +40,8 @@
             <p class='post'><h3>Description:</h3>{{book.desc}}</p>
             <br>
             <p class='post'>Posted by:{{book.creator.first_name}}</p>
-            {% if user in book.liked_book.all %}
+            {% if currentUser in book.users_fav.all %}
+            <br>
             <p>This book is already in your favorites</p>
             <a href="/unfavorite/{{book.id}}">Remove From Favorites</a>
             {% else %}
