@@ -16,8 +16,8 @@
 <body>
     <div class='center_mass'>
         <p>Quotes posted by: {{specific_user.first_name}}</p>
-        <p> They currently have:{{specific_user.fav_quotes.count}} favorites  </p>
-        {% for post in specific_user.fav_quotes.all %}
+        <p> They currently have: {{specific_user.fav_quotes.count}} favorites  </p>
+        {% for post in specific_user.quote_creator.all %}
         <div class='one_post'>
             <p class='post'>{{post.author}}</p>
             <br>

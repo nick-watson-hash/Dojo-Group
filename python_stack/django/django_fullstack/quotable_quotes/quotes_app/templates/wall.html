@@ -25,7 +25,7 @@
         {% endfor %}
         </ul>
         {% endif %}
-        <form action="/createquotes" method="POST">
+        <form action="/createquotes" method="POST"> 
             {% csrf_token %}
             <p>Quoted by: </p><input name="quoteAuthor" type="text">
             <p>Message: </p><input name="quoteMessage" type="text">
@@ -77,7 +77,7 @@
             <br>
             <a href="/delete/{{quote.id}}">Delete Quote</a>
             <br>
-            <a href="/quotes/{{quote.creator.id}}">Edit Quote</a>
+            <a href="/quotes/{{quote.id}}">Edit Quote</a>
             {% endif %}
         </div>
         {% endif %}

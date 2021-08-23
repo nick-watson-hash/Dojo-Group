@@ -51,7 +51,6 @@ def wall(request):
     if 'user_id' not in request.session:
         return redirect('/')
     context = {
-        'all_users' : User.objects.all(),
         'all_quotes' : Quote.objects.all(),
         'currentUser' : User.objects.get(id=request.session['user_id']),
     }
