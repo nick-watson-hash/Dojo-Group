@@ -24,8 +24,8 @@
             <p>First Name: </p><input name="first_name" type="text">
             <p>Last Name: </p><input name="last_name" type="text">
             <p>Email: </p><input name="email" type="text">
-            <p>Password: </p><input name="password" type="text">
-            <p>Confirm Password: </p><input name="confirm" type="text">
+            <p>Password: </p><input name="password" type="password">
+            <p>Confirm Password: </p><input name="confirm" type="password">
             <button type="submit">Register</button>
         </form>
     </div>
@@ -34,7 +34,7 @@
         <form action="/login" method="POST">
             {% csrf_token %}
             <p>Email: </p><input name="login_email" type="text">
-            <p>Password: </p><input name="login_pass" type="text">
+            <p>Password: </p><input name="login_pass" type="password">
             <button type="submit">Log In</button>
         </form>
     </div>
