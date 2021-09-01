@@ -10,14 +10,13 @@
 </head>
 <header>
     <h1>Quotable Quotes</h1>
-    <p>Welcome {{currentUser.first_name}}</p>
+    <p>Welcome {{request.session.first_name}}</p>
     <a href="/logout">Log Out</a>
     <br>
 </header>
 <hr>
 <body>
     <div class='center_mass'>
-        <!-- Use hyphen with class -->
         <h1>Contribute a quote</h1>
         {% if messages %}
         <ul>
@@ -26,8 +25,7 @@
         {% endfor %}
         </ul>
         {% endif %}
-        <form action="/createquotes" method="POST">
-            <!-- More restful routing -->
+        <form action="/createquotes" method="POST"> 
             {% csrf_token %}
             <p>Quoted by: </p><input name="quoteAuthor" type="text">
             <p>Message: </p><input name="quoteMessage" type="text">

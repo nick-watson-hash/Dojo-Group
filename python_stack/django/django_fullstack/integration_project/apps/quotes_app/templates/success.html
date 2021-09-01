@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Success</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<header>
+    <p>Welcome {{request.session.first_name}}
+    <br>
+    <a href="/logout">Log Out</a></p>
+    <h1><a href="/quotes">Go to the quotes</a></h1>
+</header>
+<body>
+    {% if messages %}
+    {% for message in messages %}
+    <h1>{{message}}</h1>
+    {% endfor %}
+    {% endif %}
+</body>
+</html>

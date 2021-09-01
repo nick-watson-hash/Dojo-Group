@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Info</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<header>
+    <p>Welcome, {{request.session.first_name}}
+    <br>
+    <a href="/logout">Log Out</a></p>
+    <hr>
+</header>
+<body>
+    {% if messages %}
+    <ul>
+    {% for message in messages %}
+    <li>{{message}}</li>
+    {% endfor %}
+    </ul>
+    {% endif %}
+    <div class='center_mass'>
+        <h1>{{specific_book.title}}</h1>
+        <h4>Added by:</h4><p>{{specific_book.creator.first_name}} {{specific_book.creator.last_name}}</p>
+        <h4>Added on:</h4><p>{{specific_book.creator.created_at}}</p>
+        <h4>Last Updated:</h4><p>{{specific_book.creator.updated_at}}</p>
+        <h4>Description:</h4><p>{{specific_book.desc}}</p>
+    </div>
+    {% if specific_book.creator.id == request.session.user_id %}
+    <div class='center_mass'>
+    <form action="/edit/{{specific_book.id}}" method="POST">
+        {% csrf_token %}
+        <h1>Would you like to update the description of the book?</h1>
+        <p>Description: </p><input name="bookDescriptionEdit" type="text">
+        <button type="submit">Update</button>
+    </form>
+    <a href="/delete/{{specific_book.id}}">Delete Book</a>
+    </div>
+    {% endif %}
+    <div class='center_mass'>
+        <h1> Others who have also favorited this book</h1>
+        <ul>
+            {% for user in specific_book.users_fav.all %}
+            <li>{{user.first_name}} {{user.last_name}}</li>
+            {% endfor %}
+        </ul>
+    </div>
+    <ul>
+        {% for book in book.users_fav.all %}
+        <li>{{book.title}} {{book.desc}}</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

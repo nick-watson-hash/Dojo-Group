@@ -22,6 +22,7 @@ def login(request):
         return redirect('/')
     logged_in = User.objects.filter(email=request.POST['login_email'])
     request.session['user_id'] = logged_in[0].id
+    request.session['first_name'] = logged_in[0].first_name
     return redirect('/success')
 
 def createUser(request):
@@ -41,7 +42,9 @@ def createUser(request):
             email = request.POST['email'],
             password = new_passwordHash,
         )
-        request.session['user_id'] = new_user.id
+        logged_in = User.objects.filter(email=request.POST['email'])
+        request.session['user_id'] = logged_in[0].id
+        request.session['first_name'] = logged_in[0].first_name
         return redirect('/success')
 
 def wall(request):
@@ -76,33 +79,28 @@ def edit(request, id):
     return render(request, 'edit.html', context)
 
 def createQuote(request):
-    if 'user_id' not in request.session or request.method != 'POST':
-        return redirect('/')
     errors = Quote.objects.quote_validator(request.POST)
     if len(errors) > 0:
         for key, value in errors.items():
             messages.error(request, value)
         return redirect('/quotes')
-    currentUser = User.objects.get(id=request.session['user_id'])
-    new_quote= Quote.objects.create(
-        author = request.POST['quoteAuthor'],
-        desc = request.POST['quoteMessage'],
-        creator = currentUser
-    )
-    currentUser.quote_creator.add(new_quote)
-    currentUser.fav_quotes.add(new_quote)
+    else:
+        currentUser = User.objects.get(id=request.session['user_id'])
+        new_quote= Quote.objects.create(
+            author = request.POST['quoteAuthor'],
+            desc = request.POST['quoteMessage'],
+            creator = currentUser
+        )
+        currentUser.quote_creator.add(new_quote)
+        currentUser.fav_quotes.add(new_quote)
     return redirect('/quotes')
 
 def deleteQuote(request, id):
-    if 'user_id' not in request.session or request.method != 'POST':
-        return redirect('/')
     destroy = Quote.objects.get(id=id)
     destroy.delete()
     return redirect('/quotes')
 
 def editQuote(request, id):
-    if 'user_id' not in request.session or request.method != 'POST':
-        return redirect('/')
     errors = Quote.objects.edit_validator(request.POST)
     edit_quote = Quote.objects.get(id=id)
     if len(errors) > 0:
@@ -125,4 +123,3 @@ def unfavorite(request, quote_id):
     quote = Quote.objects.get(id=quote_id)
     currentUser.fav_quotes.remove(quote)
     return redirect('/quotes')
-    1

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Success</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<header>
+    <p>Welcome {{last_user.first_name}} <a href="/logout">Log Out</a></p>
+    <h1><a href="/wall">Go to the Wall</a></h1>
+</header>
+<body>
+    {% if messages %}
+    {% for message in messages %}
+    {{message}}
+    {% endfor %}
+    {% endif %}
+    <div class='center_mass'>
+        <h1>Write a Post:</h1>
+        <form action="/message" method=POST>
+            {% csrf_token %}
+            <input type="text" name='message'>
+            <input type="submit">
+        </form>
+    </div>
+    <div class='center_mass'>
+        <h1>Here is the history of your posts</h1>
+        <div class='center_mass'>
+            {% for post in user_messages %}
+            <div class='one_post'>
+                <p class='post'>{{post.message}}</p>
+                <a href="/delete_message/{{post.id}}">Delete Message</a>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    Edit User Form:
+    <form action="/success/{{last_user.id}}/edit_user" method=POST>
+        {% csrf_token %}
+        First Name: <input type="text" name='firstname' value={{last_user.first_name}}>
+        Last Name: <input type="text" name='lastname' value={{last_user.last_name}}>
+        Email: <input type="text" name='email' value={{last_user.email}}>
+        <input type="submit">
+    </form>
+</body>
+</html>

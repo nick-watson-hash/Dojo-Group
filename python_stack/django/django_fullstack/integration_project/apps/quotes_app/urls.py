@@ -8,7 +8,7 @@ urlpatterns = [
     path('createuser', views.createUser),
     path('login', views.login),
     path('logout', views.logout),
-    path('quotes', views.wall),
+    path('quotes/', views.wall),
     path('quotes/<int:id>', views.edit),
     path('quotes/<int:id>/edit', views.editQuote),
     path('createquotes', views.createQuote),
@@ -17,5 +17,4 @@ urlpatterns = [
     path('unfavorite/<int:quote_id>', views.unfavorite),
     path('users/<int:id>', views.users)
 
-    # MORE RESTful ie quotes/id/delete
 ]

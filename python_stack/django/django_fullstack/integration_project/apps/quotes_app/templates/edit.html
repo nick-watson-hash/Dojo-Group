@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Quotes</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<header>
+    <a href="/logout">Log Out</a>
+    <br>
+    <a href="/quotes">Dashboard</a>
+</header>
+<body>
+    <div class='center_mass'>
+        <h1>Contribute a quote</h1>
+        {% if messages %}
+        <ul>
+        {% for message in messages %}
+        <li>{{message}}</li>
+        {% endfor %}
+        </ul>
+        {% endif %}
+        <form action="/quotes/{{specific_quote.id}}/edit" method="POST">
+            {% csrf_token %}
+            <p>Quoted by: </p><input name="quoteAuthorEdit" type="text">
+            <p>Description: </p><input name="quoteMessageEdit" type="text">
+            <br>
+            <button type="submit">Submit</button>
+            <br>
+            <a href="/quotes">Cancel</a>
+        </form>
+</body>
+</html>
