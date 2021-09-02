@@ -1,13 +1,11 @@
 from django.urls import path
 from . import views
-from django.conf import settings
-from django.conf.urls.static import static
+
+app_name = 'shoptest_app'
 
 urlpatterns = [
-    path('', views.index),
-    path('index', views.index),
-]
+    path('', views.allProdCat, name='allProdCat'),
+    path('index', views.allProdCat),
+    path('<slug:c_slug>/', views.allProdCat, name='products_by_category'),
 
-if settings.DEBUG:
-    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+]

@@ -1,0 +1,62 @@
+{% extends "struct/base.html" %}
+{% load static %}
+
+{% block metadescription %}
+    {% if category %}
+        {{ category.description|truncatewords:10 }}
+    {% else %}
+        Welcome to the upperhand store
+    {% endif %}
+{% endblock %}
+
+{% block title %}
+    {% if category %}
+        {{ category.name }} - TheUpperHand
+    {% else %}
+        See our selection
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+    {% if category %}
+        <div>
+            <div>
+                <p> <a href="{% url 'shoptest_app:allProdCat' %}">Our Product Selection</a> | {{category.name}}</p>
+            </div>
+        </div>
+    {% endif %}
+    <div>
+    {% if category %}
+        <img src ="{{category.image.url}}" alt="{{category.name}}">
+    </div>
+    <br>
+    <div>
+        <h1>{{category.name}}</h1>
+        <p>{{category.description</p>
+    </div>
+    {% else %}
+        <img src="{% static 'img/banner.png' %}" alt="Our Products Collection">
+    </div>
+    <br>
+    <div>
+        <h1> Our Product Collection </h1>
+        <p>Nam eleifend, justo vitae cursus rutrum, neque neque accumsan erat, sit amet maximus ex libero faucibus mi. Curabitur cursus quis tortor nec pellentesque. Suspendisse et enim ut justo maximus tincidunt eu eget felis. Nullam malesuada ligula sapien, non interdum odio finibus eget. Curabitur bibendum convallis iaculis. Suspendisse hendrerit, sapien id posuere sodales, sapien lacus auctor elit, a bibendum libero nisi a mauris. Suspendisse egestas, lorem vel bibendum faucibus, augue nulla molestie felis, euismod varius risus ligula vel est. </p>
+    </div>
+    {% endif %}
+    <div>
+        <div>
+            {% for product in products %}
+                <div>
+                    <div>
+                        <a href=""> <img src="{{product.image.url}}" alt="{{product.name}}"></a>
+                        <div>
+                            <h4>{{product.name}}</h4>
+                            <p>{{product.price}}</p>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
+
