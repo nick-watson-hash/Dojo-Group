@@ -5,15 +5,15 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="{% block metadescription %} {% endblock metadescription %}">
-    <title>{% block title %}Lets Buy some Cheats{% endblock title%}</title>
+    <title>{% block title %}Lets Buy some Cheats{% endblock %}</title>
 </head>
 <body>
     <div>
-        {% include 'struct/header.html' %}
-        {% include 'struct/navbar.html' %}
+        {% include 'header.html' %}
+        {% include 'navbar.html' %}
         {% block content %}
-        {% endblock content %}
+        {% endblock %}
     </div>
-        {% include 'struct/footer.html' %}
+        {% include 'footer.html' %}
 </body>
 </html>

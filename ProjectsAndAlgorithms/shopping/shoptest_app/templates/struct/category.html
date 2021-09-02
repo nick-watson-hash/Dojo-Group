@@ -1,19 +1,17 @@
-{% extends "struct/base.html" %}
+{% extends "base.html" %}
 {% load static %}
-
 {% block metadescription %}
     {% if category %}
         {{ category.description|truncatewords:10 }}
     {% else %}
-        Welcome to the upperhand store
+        Welcome to the upperhand store software to help you maintain skill.
     {% endif %}
 {% endblock %}
-
 {% block title %}
     {% if category %}
         {{ category.name }} - TheUpperHand
     {% else %}
-        See our selection
+        See our software selection - TheUpperHand
     {% endif %}
 {% endblock %}
 
@@ -21,18 +19,18 @@
     {% if category %}
         <div>
             <div>
-                <p> <a href="{% url 'shoptest_app:allProdCat' %}">Our Product Selection</a> | {{category.name}}</p>
+                <p><a href="{% url 'shop_app:allProdCat' %}">Our Product Collection</a> | {{category.name}}</p>
             </div>
         </div>
     {% endif %}
     <div>
     {% if category %}
-        <img src ="{{category.image.url}}" alt="{{category.name}}">
+        <img src="{{category.image.url}}" alt="{{category.name}}">
     </div>
     <br>
     <div>
         <h1>{{category.name}}</h1>
-        <p>{{category.description</p>
+        <p>{{category.description}}</p>
     </div>
     {% else %}
         <img src="{% static 'img/banner.png' %}" alt="Our Products Collection">
