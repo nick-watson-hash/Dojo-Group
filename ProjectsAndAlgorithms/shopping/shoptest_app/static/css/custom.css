@@ -1,0 +1,26 @@
+body {
+    font-family: 'Source Code Pro', monospace;
+}
+/* Navbar */
+.nav-item {
+    letter-spacing: .2em;
+    font-size: 14px;
+    text-transform: uppercase
+}
+
+.dropdown-item {
+    letter-spacing: .2em;
+    font-size: 14px;
+    text-transform: uppercase
+}
+
+/* Footer */
+.the_footer {
+    background-color: #f8f9fa;
+    height: 60px;
+}
+
+.the_footer p {
+    padding-top: 20px;
+    font-size: 14px;
+}
