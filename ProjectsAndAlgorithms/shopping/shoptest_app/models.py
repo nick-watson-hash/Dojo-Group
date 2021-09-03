@@ -9,7 +9,7 @@ class Category(models.Model):
         ordering = ('name',)
         verbose_name = 'category'
         verbose_name_plural = 'categories'
-        
+
     def get_url(self):
         return reverse('shop_app:products_by_category', args=[self.slug])
 
@@ -31,7 +31,7 @@ class Product(models.Model):
         ordering =('name',)
         verbose_name = 'product'
         verbose_name_plural = 'products'
-        
+
     def get_url(self):
         return reverse('shop_app:ProdCatDetail', args=[self.category.slug, self.slug])
 

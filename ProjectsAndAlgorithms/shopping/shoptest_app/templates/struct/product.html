@@ -7,28 +7,28 @@
     {{ product.name }} - TheUpperHand
 {% endblock %}
 {% block content %}
-<div>
-    <div>
+<div class="row product_row">
+    <div class="mx-auto">
         <p><a href="{% url 'shop_app:allProdCat' %}">Home</a> | <a href="{{ product.category.get_url }}">{{product.category}}</a> | {{product.name}}</p>
     </div>
-    <div>
+    <div class="container">
         <br>
-        <div>
-            <div>
-                <div>
+        <div class="row">
+            <div class="col-12 col-sm-12 col-md-12 col-lg-6 text-center">
+                <div style="min-width: 18rem">
                     <img src="{{product.image.url}}" alt="{{product.name}}">
                 </div>
             </div>
-            <div>
+            <div class="col-12 col-sm-12 col-md-12 col-lg-6">
                 <div>
-                    <h1>{{product.name}}</h1>
+                    <h1 class="product-name">{{product.name}}</h1>
                     <p>${{product.price}}</p>
-                    <p>Product Description</p>
-                    <p>{{product.description}}</p>
+                    <p class="product-name">Product Description</p>
+                    <p class="text-justify product-description">{{product.description}}</p>
                     {% if product.stock <= 0 %}
-                        <p><b>Out of Stock</b></p>
+                        <p class="text-justify product-description"><b>Out of Stock</b></p>
                     {% else %}
-                        <a href="">Add to Cart</a>
+                        <a class="btn btn-secondary" href="">Add to Cart</a>
                     {% endif %}
                 </div>
             </div>
