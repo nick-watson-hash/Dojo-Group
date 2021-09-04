@@ -1,6 +1,8 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from .models import Category, Product
 from django.core.paginator import Paginator, EmptyPage, InvalidPage
+from django.db.models import Q
+
 
 #Category View
 def allProdCat(request, c_slug=None):
@@ -11,6 +13,7 @@ def allProdCat(request, c_slug=None):
         products_list = Product.objects.filter(category = c_page, available = True)
     else:
         products_list = Product.objects.all().filter(available = True)
+
     paginator = Paginator(products_list, 3)
     try:
         page = int(request.GET.get('page','1'))
@@ -28,3 +31,9 @@ def ProdCatDetail(request, c_slug, product_slug):
     except Exception as e:
         raise e
     return render(request, 'struct/product.html', {'product':product})
+
+def searchProducts(request):
+    if request.method == 'POST':
+        product_scan = request.POST['product_scan']
+        search_results = Product.objects.all().filter(Q(name__contains=product_scan) | Q(description__contains=product_scan))
+    return render(request, 'search.html', {'product_scan':product_scan, 'search_results':search_results})
