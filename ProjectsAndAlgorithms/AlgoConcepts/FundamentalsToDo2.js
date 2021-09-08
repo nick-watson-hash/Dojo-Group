@@ -94,7 +94,7 @@ function fahrenheitToCelsius(fDegrees) {
 }
 fahrenheitToCelsius(125);
 
-// #9 
+// #9
 function celsiusToFahrenheit(cDegrees) {
     fahrenheit = (cDegrees * 9/5) + 32
     return (console.log(fahrenheit))
