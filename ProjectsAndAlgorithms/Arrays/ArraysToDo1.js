@@ -46,3 +46,14 @@ function removeAt(arr) {
     return (arr)
 }
 console.log(removeAt([1,2,3,4,5]))
+
+// #6
+function swapPairs(arr) {
+    for (var x = 0; x < arr.length - 1; x += 2) {
+        temp = arr[x]
+        arr[x] = arr[x+1]
+        arr[x+1] = temp
+    }
+    return (arr)
+}
+console.log(swapPairs([1,2,3,4,5]))
