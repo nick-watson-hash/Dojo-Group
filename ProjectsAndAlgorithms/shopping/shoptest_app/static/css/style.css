@@ -98,3 +98,34 @@ body {
 .search-text {
     padding-top: 20px;
 }
+
+/* Cart Page */
+.personal-table {
+    min-width: 400px;
+    font-size: 14px
+}
+
+.personal-thead {
+    font-weight: normal;
+    text-transform: uppercase;
+    letter-spacing: .2em;
+    background-color: antiquewhite;
+}
+
+.custom-image {
+    width: 150px;
+    height: 100px;
+}
+
+.custom-link {
+    text-decoration: none;
+}
+
+.custom-icon {
+    text-decoration: none;
+    color: lightgray;
+}
+
+.custom-button {
+    margin-top: 5px;
+}
