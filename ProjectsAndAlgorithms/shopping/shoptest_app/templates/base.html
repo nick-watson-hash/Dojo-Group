@@ -1,6 +1,7 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -13,6 +14,7 @@
     <link rel="stylesheet" type="text/css" href="{% static 'css/solid.css' %}">
     <title>{% block title %}Welcome to TheUpperHand{% endblock %}</title>
 </head>
+
 <body>
     <div class="container">
         {% include 'header.html' %}
@@ -20,10 +22,11 @@
         {% block content %}
         {% endblock %}
     </div>
-        {% include 'footer.html' %}
+    {% include 'footer.html' %}
 
     <script src="{% static 'js/jquery-3.2.1.slim.min.js' %}"></script>
     <script src="{% static 'js/popper.min.js' %}"></script>
     <script src="{% static 'js/bootstrap.min.js' %}"></script>
 </body>
+
 </html>

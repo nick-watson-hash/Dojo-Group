@@ -18,6 +18,7 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 
+#TRY TO FIX PATH CART/
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('struct/', include('shoptest_app.urls')),

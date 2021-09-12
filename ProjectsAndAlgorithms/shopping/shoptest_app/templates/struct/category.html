@@ -1,71 +1,77 @@
 {% extends "base.html" %}
 {% load static %}
 {% block metadescription %}
-    {% if category %}
-        {{ category.description|truncatewords:10 }}
-    {% else %}
-        Welcome to the upperhand store software to help you maintain skill.
-    {% endif %}
+{% if category %}
+{{ category.description|truncatewords:10 }}
+{% else %}
+Welcome to the upperhand store software to help you maintain skill.
+{% endif %}
 {% endblock %}
 {% block title %}
-    {% if category %}
-        {{ category.name }} - TheUpperHand
-    {% else %}
-        See our software selection - TheUpperHand
-    {% endif %}
+{% if category %}
+{{ category.name }} - TheUpperHand
+{% else %}
+See our software selection - TheUpperHand
+{% endif %}
 {% endblock %}
 
 {% block content %}
-    {% if category %}
-        <div class="row category_rows">
-            <div class="mx-auto">
-                <p><a href="{% url 'shop_app:allProdCat' %}">Our Product Collection</a> | {{category.name}}</p>
-            </div>
-        </div>
-    {% endif %}
+{% if category %}
+<div class="row category_rows">
     <div class="mx-auto">
+        <p><a href="{% url 'shop_app:allProdCat' %}">Our Product Collection</a> | {{category.name}}</p>
+    </div>
+</div>
+{% endif %}
+<div class="mx-auto">
     {% if category %}
-        <img class="category_image" src="{{category.image.url}}" alt="{{category.name}}">
-    </div>
-    <br>
-    <div>
-        <h1 class="text-center category_name">{{category.name}}</h1>
-        <p class="text-justify">{{category.description}}</p>
-    </div>
-    {% else %}
-        <img class="category_image image_padding" src="{% static 'img/banner.png' %}" alt="Our Products Collection">
-    </div>
-    <br>
-    <div>
-        <h1 class="text-center category_name"> Our Product Collection </h1>
-        <p class ="text-justify">Nam eleifend, justo vitae cursus rutrum, neque neque accumsan erat, sit amet maximus ex libero faucibus mi. Curabitur cursus quis tortor nec pellentesque. Suspendisse et enim ut justo maximus tincidunt eu eget felis. Nullam malesuada ligula sapien, non interdum odio finibus eget. Curabitur bibendum convallis iaculis. Suspendisse hendrerit, sapien id posuere sodales, sapien lacus auctor elit, a bibendum libero nisi a mauris. Suspendisse egestas, lorem vel bibendum faucibus, augue nulla molestie felis, euismod varius risus ligula vel est. </p>
-    </div>
-    {% endif %}
-    <div class="container">
-        <div class="row mx-auto">
-            {% for product in products.object_list %}
-                <div class="bottom_margin col-9 col-sm-12 col-md-4 col-md-12 col-lg-4">
-                    <div class="card text-center" style="width: 18rem;">
-                        <a href="{{product.get_url}}"> <img class="card-img-top category_image" src="{{product.image.url}}" alt="{{product.name}}"></a>
-                        <div class="card-body">
-                            <h4>{{product.name}}</h4>
-                            <p>${{product.price}}</p>
-                        </div>
-                    </div>
+    <img class="category_image" src="{{category.image.url}}" alt="{{category.name}}">
+</div>
+<br>
+<div>
+    <h1 class="text-center category_name">{{category.name}}</h1>
+    <p class="text-justify">{{category.description}}</p>
+</div>
+{% else %}
+<img class="category_image image_padding" src="{% static 'img/banner.png' %}" alt="Our Products Collection">
+</div>
+<br>
+<div>
+    <h1 class="text-center category_name"> Our Product Collection </h1>
+    <p class="text-justify">Nam eleifend, justo vitae cursus rutrum, neque neque accumsan erat, sit amet maximus ex
+        libero faucibus mi. Curabitur cursus quis tortor nec pellentesque. Suspendisse et enim ut justo maximus
+        tincidunt eu eget felis. Nullam malesuada ligula sapien, non interdum odio finibus eget. Curabitur bibendum
+        convallis iaculis. Suspendisse hendrerit, sapien id posuere sodales, sapien lacus auctor elit, a bibendum libero
+        nisi a mauris. Suspendisse egestas, lorem vel bibendum faucibus, augue nulla molestie felis, euismod varius
+        risus ligula vel est. </p>
+</div>
+{% endif %}
+<div class="container">
+    <div class="row mx-auto">
+        {% for product in products.object_list %}
+        <div class="bottom_margin col-9 col-sm-12 col-md-4 col-md-12 col-lg-4">
+            <div class="card text-center" style="width: 18rem;">
+                <a href="{{product.get_url}}"> <img class="card-img-top category_image" src="{{product.image.url}}"
+                        alt="{{product.name}}"></a>
+                <div class="card-body">
+                    <h4>{{product.name}}</h4>
+                    <p>${{product.price}}</p>
                 </div>
-            {% endfor %}
-        </div>
-        <div class="mx-auto">
-            {% if products.paginator.num_pages > 1 %}
-            <br>
-            <div class="text-center">
-                {% for pg in products.paginator.page_range%}
-                <a href="?page={{pg}}" class="btn btn-light btn-sm {% if products.number == pg %}active{% endif %}">{{pg}}</a>
-                {% endfor%}
             </div>
-            {% endif%}
         </div>
-        <br>
+        {% endfor %}
     </div>
+    <div class="mx-auto">
+        {% if products.paginator.num_pages > 1 %}
+        <br>
+        <div class="text-center">
+            {% for pg in products.paginator.page_range%}
+            <a href="?page={{pg}}"
+                class="btn btn-light btn-sm {% if products.number == pg %}active{% endif %}">{{pg}}</a>
+            {% endfor%}
+        </div>
+        {% endif%}
+    </div>
+    <br>
+</div>
 {% endblock %}
-

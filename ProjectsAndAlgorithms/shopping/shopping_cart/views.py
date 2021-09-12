@@ -32,7 +32,7 @@ def addCart(request, product_id):
         cart_item.save()
     return redirect('shopping_cart:cart_details')
 
-def cartDetails(request, total=0, counter=0, cart_item = None):
+def cartDetails(request, total=0, counter=0, cart_items = None):
     try:
         cart = Cart.objects.get(cart_id=personalCart(request))
         cart_items = CartItem.objects.filter(cart=cart, active=True)
@@ -53,4 +53,10 @@ def itemRemove(request, product_id):
     else:
         cart_item.delete()
     return redirect('shopping_cart:cart_details')
-    
+
+def removeAll(request, product_id):
+    cart = Cart.objects.get(cart_id=personalCart(request))
+    product = get_object_or_404(Product, id=product_id)
+    cart_item = CartItem.objects.get(product=product, cart=cart)
+    cart_item.delete()
+    return redirect('shopping_cart:cart_details')

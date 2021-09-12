@@ -4,7 +4,7 @@ from django.core.paginator import Paginator, EmptyPage, InvalidPage
 from django.db.models import Q
 
 
-#Category View
+# Category View
 def allProdCat(request, c_slug=None):
     c_page = None
     products_list = None
@@ -25,6 +25,7 @@ def allProdCat(request, c_slug=None):
         products = paginator.page(paginator.num_pages)
     return render(request, 'struct/category.html', {'category':c_page, 'products':products})
 
+# Product Details
 def ProdCatDetail(request, c_slug, product_slug):
     try:
         product = Product.objects.get(category__slug=c_slug, slug=product_slug)
@@ -32,6 +33,7 @@ def ProdCatDetail(request, c_slug, product_slug):
         raise e
     return render(request, 'struct/product.html', {'product':product})
 
+# Search Function
 def searchProducts(request):
     if request.method == 'POST':
         product_scan = request.POST['product_scan']
