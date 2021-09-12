@@ -37,3 +37,15 @@ class Product(models.Model):
 
     def __str__(self):
         return '{}'.format(self.name)
+    
+class Users(models.Model):
+    first_name = models.CharField(max_length=255)
+    last_name = models.CharField(max_length=255)
+    email = models.CharField(max_length=255)
+    date_of_birth = models.DateTimeField(null=True)
+    password = models.CharField(max_length=255)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __repr__(self):
+        return f"<User object: {self.title} ({self.id})>"
