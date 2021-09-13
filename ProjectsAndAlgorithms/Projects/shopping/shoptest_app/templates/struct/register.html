@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+{% load static %}
+{% block metadescription %}
+Please login so you have full access to the website
+{% endblock %}
+{% block title %}
+Login Page
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="d-flex justify-content-center">
+        <div class="card">
+            <div class="card-header">
+                <h3>Register</h3>
+                {% if messages %}
+                <ul>
+                {% for message in messages %}
+                <li>{{message}}</li>
+                {% endfor %}
+                </ul>
+                {% endif %}
+            </div>
+            <div class="card-body">
+                <form action="/create" method="POST">
+                    {% csrf_token %}
+                    <div class="input-group form-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fas fa-user"></i></span>
+                        </div>
+                        <input type="text" class="form-control" placeholder="username" value="username" name="username">
+                    </div>
+                    <div class="input-group form-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fas fa-key"></i></span>
+                        </div>
+                        <input type="password" class="form-control" placeholder="password" value="password" name="password">
+                    </div>
+                    <div class="input-group form-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fas fa-key"></i></span>
+                        </div>
+                        <input type="password" class="form-control" placeholder="confirm" value="confirm" name="confirm">
+                    </div>
+                    <div class="input-group form-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"></span>
+                        </div>
+                        <input type="text" class="form-control" placeholder="First Name" value="first_name" name="first_name">
+                    </div>
+                    <div class="input-group form-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"></span>
+                        </div>
+                        <input type="text" class="form-control" placeholder="Last Name" value="last_name" name="last_name">
+                    </div>
+                    <div class="input-group form-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"></span>
+                        </div>
+                        <input type="text" class="form-control" placeholder="Email Address" value="email" name="email">
+                    </div>
+                    <div class="input-group form-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"></span>
+                        </div>
+                        <input type="date" class="form-control" placeholder="Birthday">
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Register" class="btn float-right login_btn">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

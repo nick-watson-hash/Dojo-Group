@@ -1,10 +1,51 @@
 from django.db import models
 from django.urls import reverse
+import bcrypt
+import re
+
+class UserManager(models.Manager):
+    def registration_validator(self, postData):
+        errors = {}
+        existing_users = User.objects.filter(email=postData['email'])
+        EMAIL_REGEX = re.compile(r'^[a-zA-Z0-9.+_-]+@[a-zA-Z0-9._-]+\.[a-zA-Z]+$')
+
+        if len(postData['first_name']) < 2:
+            errors['first_name'] = "Your first name should be at least 2 characters with only letters"
+        if len(postData['last_name']) < 2:
+            errors['last_name'] = "Your last name should be at least 2 characters with only letters"
+        if len(postData['email']) == 0:
+            errors['email'] = "You must enter an email"
+        if not EMAIL_REGEX.match(postData['email']):
+            errors['email'] = "The email address is not in the correct format"
+        if len(existing_users) != 0:
+            errors['email'] = "Your email that you have chosen cannot be used" 
+        if len(postData['password']) < 8:
+            errors['password'] = "Your password should be at least 8 characters"
+        if (postData['password'] != postData['confirm']):
+            errors['confirm'] = "Your passwords do not match"
+        return errors
+
+    def login_validator(self, postData):
+        errors = {}
+        existing_users = User.objects.filter(email=postData['login_email'])
+        
+        if len(postData['login_email']) == 0:
+            errors ['login_email'] = "Your login email needs to be entered"
+        if len(postData['login_pass']) == 0:
+            errors ['login_pass'] = "Your password needs to be entered"
+        if len(postData['login_pass']) < 8:
+            errors ['login_pass'] = "An eight character password must be entered"
+        if not existing_users:
+            errors ['login_pass'] = "Incorrect email or password"
+        elif bcrypt.checkpw(postData['login_pass'].encode(), existing_users[0].password.encode()) != True:
+            errors ['login_pass'] = "Incorrect email or password"
+        return errors
 class Category(models.Model):
     name = models.CharField(max_length=250, unique=True)
     slug = models.SlugField(max_length=250, unique=True)
     description = models.TextField(blank=True)
     image = models.ImageField(upload_to='category', blank=True)
+    #product.category
     class Meta:
         ordering = ('name',)
         verbose_name = 'category'
@@ -37,8 +78,9 @@ class Product(models.Model):
 
     def __str__(self):
         return '{}'.format(self.name)
-    
-class Users(models.Model):
+
+class User(models.Model):
+    username = models.CharField(max_length=255, default=True)
     first_name = models.CharField(max_length=255)
     last_name = models.CharField(max_length=255)
     email = models.CharField(max_length=255)
@@ -46,6 +88,7 @@ class Users(models.Model):
     password = models.CharField(max_length=255)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    objects = UserManager()
 
     def __repr__(self):
         return f"<User object: {self.title} ({self.id})>"

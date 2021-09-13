@@ -29,6 +29,7 @@ def createUser(request):
         return redirect('/')
     errors = User.objects.basic_validator(request.POST)
     if len(errors) > 0:
+        console.log(errors)
         for key, value in errors.items():
             messages.error(request, value)
         return redirect('/')
