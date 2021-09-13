@@ -2,9 +2,11 @@ from django.shortcuts import render, get_object_or_404, redirect
 from .models import Category, Product
 from django.core.paginator import Paginator, EmptyPage, InvalidPage
 from django.db.models import Q
+import bcrypt
 
 
 # Category View
+#Retrieve Category objects
 def allProdCat(request, c_slug=None):
     c_page = None
     products_list = None
@@ -13,7 +15,7 @@ def allProdCat(request, c_slug=None):
         products_list = Product.objects.filter(category = c_page, available = True)
     else:
         products_list = Product.objects.all().filter(available = True)
-
+    # PAGINATION web pages for products
     paginator = Paginator(products_list, 3)
     try:
         page = int(request.GET.get('page','1'))
@@ -39,3 +41,12 @@ def searchProducts(request):
         product_scan = request.POST['product_scan']
         search_results = Product.objects.all().filter(Q(name__contains=product_scan) | Q(description__contains=product_scan))
     return render(request, 'search.html', {'product_scan':product_scan, 'search_results':search_results})
+
+# Login Page
+def loginPage(request):
+    return render(request, 'struct/login.html')
+
+# Log Out
+def logOut(request):
+    request.session.clear()
+    return redirect('/')

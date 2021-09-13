@@ -23,11 +23,19 @@
                         class="fas fa-shopping-cart"></i><span class="sr-only">(current)</span>({{item_count}})</a>
             </li>
             {% endif %}
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'shop_app:login_page' %}">Login</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Create Account</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'shop_app:log_out' %}">Log Out</a>
+            </li>
         </ul>
         <form class="form-inline my-2 my-lg-0" method="POST" action="{% url 'shop_app:search_products' %}">
             {% csrf_token %}
-            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"
-                name="product_scan">
+            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="product_scan">
             <button class="btn btn-secondary my-2 my-sm-0" type="submit"><i class="fas fa-search"></i></button>
         </form>
     </div>

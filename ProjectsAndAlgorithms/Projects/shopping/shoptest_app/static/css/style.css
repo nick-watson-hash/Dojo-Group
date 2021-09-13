@@ -7,6 +7,7 @@ body {
     height: 100%;
     font-family: 'Source Code Pro', monospace;
 }
+
 /* Navbar */
 .nav-item {
     letter-spacing: .2em;
@@ -24,6 +25,7 @@ body {
 .the_footer {
     background-color: lightgray;
     height: 60px;
+    margin-top: 15%;
 }
 
 .the_footer p {
@@ -134,4 +136,45 @@ body {
 
 .custom-button {
     margin-top: 5px;
+}
+
+ /* Login Box */
+.card-header h3 {
+    color: black;
+}
+
+.input-group-prepend span {
+    width: 50px;
+    background-color: #d3d3d3;
+    color:black;
+    border: 0 !important;
+}
+
+.remember input {
+    width: 15px;
+    height: 15px;
+    margin-left: 15px;
+    margin-right: 8px;
+}
+
+.login_btn {
+    color:white;
+    background-color: #6c757d;
+    width: 100px;
+}
+
+.login_btn:hover{
+    color: #6c757d;
+    background-color: white;
+}
+
+.links {
+    color: black;
+}
+
+.links a  {
+    font-style: italic;
+    color: black;
+    margin-left: 10px;
+    margin-bottom: 12px;
 }
