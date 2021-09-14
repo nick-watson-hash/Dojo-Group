@@ -29,7 +29,7 @@ body {
 .the_footer {
     background-color: lightgray;
     height: 60px;
-    margin-top: 15%;
+    margin-top: 1.4%;
 }
 
 .the_footer p {
@@ -54,7 +54,7 @@ body {
 }
 
 .category_image {
-    width:75%;
+    width: 100%;
     height: auto;
 }
 
