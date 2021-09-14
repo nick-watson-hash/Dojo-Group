@@ -9,6 +9,10 @@ body {
 }
 
 /* Navbar */
+.navbar {
+    margin-bottom: 5%;
+}
+
 .nav-item {
     letter-spacing: .2em;
     font-size: 14px;
@@ -50,7 +54,7 @@ body {
 }
 
 .category_image {
-    width:100%;
+    width:75%;
     height: auto;
 }
 

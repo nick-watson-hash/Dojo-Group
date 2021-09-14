@@ -40,5 +40,6 @@ def success(request):
     return render(request, 'success.html', context)
 
 def logout(request):
-    request.session.clear()
+    destroy = User.objects.get(id=id)
+    destroy.delete()
     return redirect('/')

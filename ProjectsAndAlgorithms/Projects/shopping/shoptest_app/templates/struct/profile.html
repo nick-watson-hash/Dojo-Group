@@ -8,45 +8,64 @@ Profile Page
 {% endblock %}
 
 {% block content %}
-<div class="col-xl-9 col-lg-9 col-md-12 col-sm-12 col-12">
-    <div class="card h-100">
-        <div class="card-body">
-            <form action="/update" method="POST">
-                {% csrf_token %}
-                <div class="row gutters">
-                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                        <h6 class="mb-2 text-primary">Profile Page</h6>
-                        <h6 class="mb-2 text-primary">Fill in the form to edit your user.</h6>
-                    </div>
-                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                        <div class="form-group">
-                            <p>Current Email:{{current_user.email}}</p>
-                        </div>
-                    </div>
-                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                        <div class="form-group">
-                            <label for="email">Email</label>
-                            <input type="text" class="form-control" placeholder="Enter a new email address"
-                                name="email_edit"></input>
-                        </div>
-                    </div>
-                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                        <div class="form-group">
-                            <label for="password">Password</label>
-                            <input type="text" class="form-control" placeholder="Enter new password"
-                                name="password_edit"></input>
-                        </div>
-                    </div>
+<div class="container">
+    <div class="d-flex justify-content-center">
+        <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12 col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h3>Profile Page</h3>
+                    {% if messages %}
+                    <ul>
+                        {% for message in messages %}
+                        <li>{{message}}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
                 </div>
-                <div class="row gutters">
-                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                        <div class="text-right">
-                            <input type="submit" value="Cancel" name="cancel" class="btn btn-secondary"></input>
-                            <input type="submit" value="Submit" name="submit" class="btn btn-primary"></input>
+                <div class="card-body">
+                    <form action="/update" method="POST">
+                        {% csrf_token %}
+                        <div class="row mx-auto">
+                            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                                <h6 class="mb-2 text-primary">Fill in the form to edit your user.</h6>
+                            </div>
+                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                <div class="form-group">
+                                    <p>Current Email:{{current_user.email}}</p>
+                                </div>
+                                <div class="form-group">
+                                    <label for="email">Email</label>
+                                    <input type="text" class="form-control" placeholder="Enter a new email address"
+                                        name="email_edit"></input>
+                                </div>
+                            </div>
+                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                <div class="form-group">
+                                    <label for="password">Password</label>
+                                    <input type="text" class="form-control" placeholder="Enter new password"
+                                        name="password_edit"></input>
+                                </div>
+                                <div class="form-group">
+                                    <label for="password">Verify Password</label>
+                                    <input type="text" class="form-control" placeholder="Verify your new password"
+                                        name="password_editverify"></input>
+                                </div>
+                            </div>
                         </div>
-                    </div>
+                        <div class="row gutters">
+                            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                                <div class="text-right">
+                                    <input type="submit" value="Submit" name="submit" class="btn btn-primary"></input>
+                                </div>
+                                <div class="text-left">
+                                    <button type="button" onclick="location.href='{% url 'shop_app:delete' %}'" name="delete" class="btn btn-danger">Delete Account</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
                 </div>
-            </form>
+            </div>
         </div>
     </div>
-    {% endblock %}
+</div>
+{% endblock %}

@@ -4,7 +4,7 @@
 Please login so you have full access to the website
 {% endblock %}
 {% block title %}
-    Login Page
+Login Page
 {% endblock %}
 
 {% block content %}
@@ -15,9 +15,9 @@ Please login so you have full access to the website
                 <h3>Sign In</h3>
                 {% if messages %}
                 <ul>
-                {% for message in messages %}
-                <li>{{message}}</li>
-                {% endfor %}
+                    {% for message in messages %}
+                    <li>{{message}}</li>
+                    {% endfor %}
                 </ul>
                 {% endif %}
             </div>

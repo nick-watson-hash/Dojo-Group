@@ -65,8 +65,9 @@ def registrationPage(request):
 
 # Profile Page
 def profilePage(request):
+    if 'user_id' not in request.session:
+        return redirect('/')
     # Checks for user_id in request.session
-    login_check = ""
     if 'user_id' in request.session:
         login_check = User.objects.get(id=request.session['user_id'])
     context = {
@@ -76,11 +77,20 @@ def profilePage(request):
 
 # Update Profile Page
 def editProfile(request):
-    profile_edit = ""
-    if 'user_id' in request.session:
-        profile_edit = User.objects.get(id=request.session['user_id'])
+    errors = User.objects.edit_validator(request.POST)
+    if len(errors) > 0:
+        for key, value in errors.items():
+            messages.error(request, value)
+        return redirect('/profile')
+    else:
+        # Checks for user_id in request.session
+        if 'user_id' in request.session:
+            profile_edit = User.objects.get(id=request.session['user_id'])
+    profile_password = profile_edit.password
     profile_edit.email = request.POST['email_edit']
-    profile_edit.password = request.POST['password_edit']
+    profile_password = request.POST['password_edit']
+    profile_password = bcrypt.hashpw(profile_password.encode(), bcrypt.gensalt()).decode()
+    profile_password.save()
     profile_edit.save()
     return redirect('/profile')
 
@@ -125,5 +135,12 @@ def signIn(request):
 
 # Log Out
 def logOut(request):
+    request.session.flush()
+    return redirect('/')
+
+# Delete Account
+def accountDelete(request):
+    destroy = User.objects.get(id=request.session['user_id'])
+    destroy.delete()
     request.session.flush()
     return redirect('/')

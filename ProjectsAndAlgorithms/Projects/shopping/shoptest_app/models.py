@@ -18,7 +18,7 @@ class UserManager(models.Manager):
         if not EMAIL_REGEX.match(postData['email']):
             errors['email'] = "The email address is not in the correct format"
         if len(existing_users) != 0:
-            errors['email'] = "Your email that you have chosen cannot be used" 
+            errors['email'] = "Your email that you have chosen cannot be used"
         if len(postData['password']) < 8:
             errors['password'] = "Your password should be at least 8 characters"
         if (postData['password'] != postData['confirm']):
@@ -39,6 +39,27 @@ class UserManager(models.Manager):
             errors ['login_pass'] = "Incorrect username or password (not user)"
         elif bcrypt.checkpw(postData['login_pass'].encode(), existing_users[0].password.encode()) != True:
             errors ['login_pass'] = "Incorrect username or password (password)"
+        return errors
+
+    def edit_validator(self, postData):
+        errors = {}
+        existing_users = User.objects.filter(email=postData['email_edit'])
+        EMAIL_REGEX = re.compile(r'^[a-zA-Z0-9.+_-]+@[a-zA-Z0-9._-]+\.[a-zA-Z]+$')
+
+        if len(postData['email_edit']) == 0:
+            errors['email_edit'] = "You must enter an email"
+        if not EMAIL_REGEX.match(postData['email_edit']):
+            errors['email_edit'] = "The email address is not in the correct format"
+        if len(existing_users) != 0:
+            errors['email_edit'] = "Your email that you have chosen cannot be used"
+        if len(postData['password_edit']) == 0:
+            errors ['password_edit'] = "A password needs to be entered"
+        if len(postData['password_edit']) < 8:
+            errors ['password_edit'] = "An eight character password must be entered"
+        if len(postData['password_edit']) < 8:
+            errors['password_edit'] = "Your password should be at least 8 characters"
+        if (postData['password_edit'] != postData['password_editverify']):
+            errors['password_editverify'] = "Your passwords do not match"
         return errors
 class Category(models.Model):
     name = models.CharField(max_length=250, unique=True)
