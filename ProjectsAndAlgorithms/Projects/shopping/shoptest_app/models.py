@@ -18,7 +18,9 @@ class UserManager(models.Manager):
         if not EMAIL_REGEX.match(postData['email']):
             errors['email'] = "The email address is not in the correct format"
         if len(existing_users) != 0:
-            errors['email'] = "Your email that you have chosen cannot be used"
+            errors['username'] = "Your username that you have chosen cannot be used"
+        if len(postData['password']) == 0:
+            errors['password'] = "Your password cannot be blank."
         if len(postData['password']) < 8:
             errors['password'] = "Your password should be at least 8 characters"
         if (postData['password'] != postData['confirm']):
