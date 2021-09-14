@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% load static %}
+{% block metadescription %}
+Welcome to your profile page
+{% endblock %}
+{% block title %}
+Profile Page
+{% endblock %}
+
+{% block content %}
+<div class="col-xl-9 col-lg-9 col-md-12 col-sm-12 col-12">
+    <div class="card h-100">
+        <div class="card-body">
+            <form action="/update" method="POST">
+                {% csrf_token %}
+                <div class="row gutters">
+                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                        <h6 class="mb-2 text-primary">Profile Page</h6>
+                        <h6 class="mb-2 text-primary">Fill in the form to edit your user.</h6>
+                    </div>
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                        <div class="form-group">
+                            <p>Current Email:{{current_user.email}}</p>
+                        </div>
+                    </div>
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="text" class="form-control" placeholder="Enter a new email address"
+                                name="email_edit"></input>
+                        </div>
+                    </div>
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                        <div class="form-group">
+                            <label for="password">Password</label>
+                            <input type="text" class="form-control" placeholder="Enter new password"
+                                name="password_edit"></input>
+                        </div>
+                    </div>
+                </div>
+                <div class="row gutters">
+                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                        <div class="text-right">
+                            <input type="submit" value="Cancel" name="cancel" class="btn btn-secondary"></input>
+                            <input type="submit" value="Submit" name="submit" class="btn btn-primary"></input>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    {% endblock %}
