@@ -1,7 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import *
 from django.contrib import messages
-from django.contrib.auth import authenticate, login
 from django.core.paginator import Paginator, EmptyPage, InvalidPage
 from django.db.models import Q
 import bcrypt
@@ -27,9 +26,14 @@ def allProdCat(request, c_slug=None):
         products = paginator.page(page)
     except (EmptyPage, InvalidPage):
         products = paginator.page(paginator.num_pages)
+    # Checks for user_id in request.session
+    login_check = ""
+    if 'user_id' in request.session:
+        login_check = User.objects.get(id=request.session['user_id'])
     context = {
         'category':c_page,
-        'products':products
+        'products':products,
+        'current_user':login_check
     }
     return render(request, 'struct/category.html', context)
 
@@ -59,6 +63,27 @@ def searchProducts(request):
 def registrationPage(request):
     return render(request, 'struct/register.html')
 
+# Profile Page
+def profilePage(request):
+    # Checks for user_id in request.session
+    login_check = ""
+    if 'user_id' in request.session:
+        login_check = User.objects.get(id=request.session['user_id'])
+    context = {
+        'current_user':login_check
+    }
+    return render(request, 'struct/profile.html', context)
+
+# Update Profile Page
+def editProfile(request):
+    profile_edit = ""
+    if 'user_id' in request.session:
+        profile_edit = User.objects.get(id=request.session['user_id'])
+    profile_edit.email = request.POST['email_edit']
+    profile_edit.password = request.POST['password_edit']
+    profile_edit.save()
+    return redirect('/profile')
+
 # Account Creation
 def createAccount(request):
     if request.method != 'POST':
@@ -85,18 +110,18 @@ def createAccount(request):
 def loginPage(request):
     return render(request, 'struct/login.html')
 
+# Login Function
 def signIn(request):
     if request.method != 'POST':
         return redirect('/')
-    username = request.POST['username']
-    password = request.POST['password']
-    user = authenticate(request, username=username, password=password)
-    if user is not None:
-        login(request, user)
-        return redirect('shop_app:allProdCat')
-    else:
-        messages.error(request, 'Invalid Login!')
-    return redirect('/login')
+    errors = User.objects.login_validator(request.POST)
+    if len(errors) > 0:
+        for key, value in errors.items():
+            messages.error(request, value)
+        return redirect('/login')
+    logged_in = User.objects.filter(username=request.POST['login_username'])
+    request.session['user_id'] = logged_in[0].id
+    return redirect('/')
 
 # Log Out
 def logOut(request):

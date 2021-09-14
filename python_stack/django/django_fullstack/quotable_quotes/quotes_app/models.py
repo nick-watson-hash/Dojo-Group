@@ -1,5 +1,4 @@
 from django.db import models
-from datetime import *
 import bcrypt
 import re
 

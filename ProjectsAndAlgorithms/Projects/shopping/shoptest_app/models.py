@@ -6,7 +6,7 @@ import re
 class UserManager(models.Manager):
     def registration_validator(self, postData):
         errors = {}
-        existing_users = User.objects.filter(email=postData['email'])
+        existing_users = User.objects.filter(username=postData['username'])
         EMAIL_REGEX = re.compile(r'^[a-zA-Z0-9.+_-]+@[a-zA-Z0-9._-]+\.[a-zA-Z]+$')
 
         if len(postData['first_name']) < 2:
@@ -27,18 +27,18 @@ class UserManager(models.Manager):
 
     def login_validator(self, postData):
         errors = {}
-        existing_users = User.objects.filter(email=postData['login_email'])
-        
-        if len(postData['login_email']) == 0:
-            errors ['login_email'] = "Your login email needs to be entered"
+        existing_users = User.objects.filter(username=postData['login_username'])
+
+        if len(postData['login_username']) == 0:
+            errors ['login_username'] = "Your username needs to be entered"
         if len(postData['login_pass']) == 0:
             errors ['login_pass'] = "Your password needs to be entered"
         if len(postData['login_pass']) < 8:
             errors ['login_pass'] = "An eight character password must be entered"
         if not existing_users:
-            errors ['login_pass'] = "Incorrect email or password"
+            errors ['login_pass'] = "Incorrect username or password (not user)"
         elif bcrypt.checkpw(postData['login_pass'].encode(), existing_users[0].password.encode()) != True:
-            errors ['login_pass'] = "Incorrect email or password"
+            errors ['login_pass'] = "Incorrect username or password (password)"
         return errors
 class Category(models.Model):
     name = models.CharField(max_length=250, unique=True)
@@ -91,4 +91,4 @@ class User(models.Model):
     objects = UserManager()
 
     def __repr__(self):
-        return f"<User object: {self.title} ({self.id})>"
+        return f"<User object: {self.username} ({self.id})>"
