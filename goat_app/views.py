@@ -159,14 +159,9 @@ def run_bet(request):
     list = ['cat', 'dog', 'horse']
     pick=(random.choice(list))
     print(pick)
-    if user.vote == pick:
-        user.bank=bank+user.bet
-        user.save()
-        print(user.bank)
-    else:
-        user.bank=bank-user.bet
-        user.save()
-        print(user.bank)
+    user.bank = bank+user.bet if user.vote == pick else bank-user.bet
+    user.save()
+    print(user.bank)
     user.bet = 0
     user.vote = ""
     user.save()
