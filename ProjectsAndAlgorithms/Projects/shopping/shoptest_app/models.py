@@ -48,14 +48,14 @@ class UserManager(models.Manager):
         existing_users = User.objects.filter(email=postData['email_edit'])
         EMAIL_REGEX = re.compile(r'^[a-zA-Z0-9.+_-]+@[a-zA-Z0-9._-]+\.[a-zA-Z]+$')
 
-        if len(postData['email_edit']) == 0:
-            errors['email_edit'] = "You must enter an email"
+        if len(postData['email_edit']) < 1:
+            errors['email_edit'] = "You must enter a longer email"
         if not EMAIL_REGEX.match(postData['email_edit']):
             errors['email_edit'] = "The email address is not in the correct format"
         if len(existing_users) != 0:
             errors['email_edit'] = "Your email that you have chosen cannot be used"
-        if len(postData['password_edit']) == 0:
-            errors ['password_edit'] = "A password needs to be entered"
+        if len(postData['password_edit']) < 1:
+            errors ['password_edit'] = "A longer password needs to be entered"
         if len(postData['password_edit']) < 8:
             errors ['password_edit'] = "An eight character password must be entered"
         if len(postData['password_edit']) < 8:

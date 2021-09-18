@@ -52,7 +52,7 @@ def ProdCatDetail(request, c_slug, product_slug):
 def searchProducts(request):
     if request.method == 'POST':
         product_scan = request.POST['product_scan']
-        search_results = Product.objects.all().filter(Q(name__contains=product_scan) | Q(description__contains=product_scan))
+        search_results = Product.objects.all().filter(Q(name__contains=product_scan) or Q(description__contains=product_scan))
     context = {
         'product_scan':product_scan,
         'search_results':search_results
@@ -77,6 +77,8 @@ def profilePage(request):
 
 # Update Profile Page
 def editProfile(request):
+    if 'user_id' not in request.session:
+        return redirect('/')
     errors = User.objects.edit_validator(request.POST)
     if len(errors) > 0:
         for key, value in errors.items():
@@ -87,10 +89,10 @@ def editProfile(request):
         if 'user_id' in request.session:
             profile_edit = User.objects.get(id=request.session['user_id'])
     profile_password = profile_edit.password
-    profile_edit.email = request.POST['email_edit']
     profile_password = request.POST['password_edit']
-    profile_password = bcrypt.hashpw(profile_password.encode(), bcrypt.gensalt()).decode()
-    profile_password.save()
+    profile_edit.email = request.POST['email_edit']
+    profile_passwordHash = bcrypt.hashpw(profile_password.encode(), bcrypt.gensalt()).decode()
+    profile_edit.password = profile_passwordHash
     profile_edit.save()
     return redirect('/profile')
 
@@ -140,6 +142,8 @@ def logOut(request):
 
 # Delete Account
 def accountDelete(request):
+    if 'user_id' not in request.session:
+        return redirect('/')
     destroy = User.objects.get(id=request.session['user_id'])
     destroy.delete()
     request.session.flush()
