@@ -18,7 +18,7 @@
 {% block content %}
 
 {% if category %}
-<div class="row category_rows">
+<div class="row category-rows">
     <div class="mx-auto">
         <p><a href="{% url 'shop_app:allProdCat' %}">Our Product Collection</a> | {{category.name}}</p>
     </div>
@@ -26,19 +26,19 @@
 {% endif %}
 <div class="mx-auto">
     {% if category %}
-    <img class="category_image" src="{{category.image.url}}" alt="{{category.name}}">
+    <img class="category-image" src="{{category.image.url}}" alt="{{category.name}}">
 </div>
 <br>
 <div>
-    <h1 class="text-center category_name">{{category.name}}</h1>
+    <h1 class="text-center category-name">{{category.name}}</h1>
     <p class="text-justify">{{category.description}}</p>
 </div>
 {% else %}
-<img class="category_image image_padding" src="{% static 'img/banner.png' %}" alt="Our Products Collection">
+<img class="category-image image-padding" src="{% static 'img/banner.png' %}" alt="Our Products Collection">
 </div>
 <br>
 <div>
-    <h1 class="text-center category_name"> Our Product Collection </h1>
+    <h1 class="text-center category-name"> Our Product Collection </h1>
     <p class="text-justify">Nam eleifend, justo vitae cursus rutrum, neque neque accumsan erat, sit amet maximus ex
         libero faucibus mi. Curabitur cursus quis tortor nec pellentesque. Suspendisse et enim ut justo maximus
         tincidunt eu eget felis. Nullam malesuada ligula sapien, non interdum odio finibus eget. Curabitur bibendum
@@ -50,9 +50,9 @@
 <div class="container">
     <div class="row mx-auto">
         {% for product in products.object_list %}
-        <div class="bottom_margin col-9 col-sm-12 col-md-4 col-md-12 col-lg-4">
+        <div class="bottom-margin col-9 col-sm-12 col-md-4 col-md-12 col-lg-4">
             <div class="card text-center" style="width: 18rem;">
-                <a href="{{product.get_url}}"> <img class="card-img-top category_image" src="{{product.image.url}}"
+                <a href="{{product.get_url}}"> <img class="card-img-top category-image" src="{{product.image.url}}"
                         alt="{{product.name}}"></a>
                 <div class="card-body">
                     <h4>{{product.name}}</h4>

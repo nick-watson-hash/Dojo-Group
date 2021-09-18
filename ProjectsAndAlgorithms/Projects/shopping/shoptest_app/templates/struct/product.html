@@ -7,7 +7,7 @@
     {{ product.name }} - TheUpperHand
 {% endblock %}
 {% block content %}
-<div class="row product_row">
+<div class="row product-row">
     <div class="mx-auto">
         <p><a href="{% url 'shop_app:allProdCat' %}">Home</a> | <a href="{{ product.category.get_url }}">{{product.category}}</a> | {{product.name}}</p>
     </div>
