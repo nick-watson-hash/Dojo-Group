@@ -88,6 +88,8 @@ def submit(request):
 #     }
 #     return render(request,'results.html', context)
 
+
+# NEED EDGE CASE FOR IF NAME DOES NOT APPEAR IN SEARCH LINE 106
 def player_search(request):
     querry=request.POST["search"]
     url = "https://nba-stats4.p.rapidapi.com/players/"
