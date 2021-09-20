@@ -1,7 +1,6 @@
 from django.db import models
 import bcrypt
 import re
-
 class UserManager(models.Manager):
     def basic_validator(self, postData):
         errors = {}

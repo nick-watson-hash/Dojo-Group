@@ -65,3 +65,20 @@ function arrConcat(arr1, arr2) {
     return arr
 }
 console.log(arrConcat([15,2,4,3,5,6,75,8,9,32], [8, 35,'trd','sdfdsfwe','32', 78]))
+
+//  Drew ish
+function getSecondLargest(nums) {
+    var holder = nums[0]
+    var other = -1
+    for (var x = 0; x < nums.length; x++) {
+        if (nums[x] > holder) {
+            other = holder
+            holder = nums[x]
+        }
+        if (nums[x] > other && nums[x] < holder) {
+            other = nums[x]
+        }
+    }
+    return other
+}
+console.log(getSecondLargest([2,3,6,6,5]))

@@ -1,16 +1,23 @@
 from django.shortcuts import render,redirect
-import requests, json, random
+from django.contrib import messages
+import requests, json, random, bcrypt
 from .models import User, GOAT, GOATdb, Matchup
 
 def index(request):
-    user=User.objects.get(id=2)
+    # Check for user_id in session
+    login_check = ""
+    if 'user_id' in request.session:
+        login_check = User.objects.get(id=request.session['user_id'])
+
+    user = User.objects.get(id=2)
     context={
         'user':User.objects.get(id=2),
         'goats':GOAT.objects.filter(creator=user),
-        'goat1':request.session['goat1'],
-        'goat2':request.session['goat2'],
-        'rand_goat1':request.session['g1'],
-        'rand_goat2':request.session['g2']
+        'current_user':login_check,
+        # 'goat1':request.session['goat1'],
+        # 'goat2':request.session['goat2'],
+        # 'rand_goat1':request.session['g1'],
+        # 'rand_goat2':request.session['g2']
     }
     return render(request, 'index.html', context)
 
@@ -88,6 +95,8 @@ def submit(request):
 #     }
 #     return render(request,'results.html', context)
 
+
+# NEED EDGE CASE FOR IF NAME DOES NOT APPEAR IN SEARCH LINE 106
 def player_search(request):
     querry=request.POST["search"]
     url = "https://nba-stats4.p.rapidapi.com/players/"
@@ -336,5 +345,50 @@ def stats_comp(request):
         print(key, resp_json_stats[key])
     return redirect('/')
 
+# Registration page
+def registration(request):
+    return render(request, "register.html")
 
+# User creation method
+def create_user(request):
+    if request.method != 'POST':
+        return redirect('/')
+    errors = User.objects.basic_validator(request.POST)
+    if len(errors) > 0:
+        for key, value in errors.items():
+            messages.error(request, value)
+    else:
+        new_password = request.POST['password']
+        new_passwordHash = bcrypt.hashpw(new_password.encode(), bcrypt.gensalt()).decode()
+        new_user = User.objects.create(
+            first_name = request.POST['first_name'],
+            last_name = request.POST['last_name'],
+            email = request.POST['email'],
+            hashpass = new_passwordHash,
+        )
+        request.session['user_id'] = new_user.id
+
+    return redirect('/')
+
+# Login Page
+def login_page(request):
+    return render(request, 'login.html')
+
+# Login Method
+def sign_in(request):
+    if request.method != 'POST':
+        return redirect('/')
+    errors = User.objects.login_validator(request.POST)
+    if len(errors) > 0:
+        for key, value in errors.items():
+            messages.error(request, value)
+        return redirect('/login')
+    logged_in = User.objects.filter(username=request.POST['login_username'])
+    request.session['user_id'] = logged_in[0].id
+    return redirect('/')
+
+# Logout Method
+def logout(request):
+    request.session.flush()
+    return redirect('/')
 
