@@ -5,6 +5,8 @@ urlpatterns=[
     path('', views.index),
     path('results', views.results),
     # path('pick', views.pick),
+    path('register', views.registration),
+    path('create_user', views.createUser),
     path('player_search', views.player_search),
     path('create', views.create),
     path('add_goat', views.add_goat),
