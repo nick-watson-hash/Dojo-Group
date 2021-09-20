@@ -1,5 +1,5 @@
 from django.shortcuts import render,redirect
-import requests, json, random
+import requests, json, random, bcrypt, messages
 from .models import User, GOAT, GOATdb, Matchup
 
 def index(request):
@@ -7,10 +7,10 @@ def index(request):
     context={
         'user':User.objects.get(id=2),
         'goats':GOAT.objects.filter(creator=user),
-        'goat1':request.session['goat1'],
-        'goat2':request.session['goat2'],
-        'rand_goat1':request.session['g1'],
-        'rand_goat2':request.session['g2']
+        # 'goat1':request.session['goat1'],
+        # 'goat2':request.session['goat2'],
+        # 'rand_goat1':request.session['g1'],
+        # 'rand_goat2':request.session['g2']
     }
     return render(request, 'index.html', context)
 
@@ -338,5 +338,27 @@ def stats_comp(request):
         print(key, resp_json_stats[key])
     return redirect('/')
 
+def registration(request):
+    return render(request, "register.html")
 
+def createUser(request):
+    if request.method != 'POST':
+        return redirect('/')
+    errors = User.objects.basic_validator(request.POST)
+    if len(errors) > 0:
+        console.log(errors)
+        for key, value in errors.items():
+            messages.error(request, value)
+    else:
+        new_password = request.POST['password']
+        new_passwordHash = bcrypt.hashpw(new_password.encode(), bcrypt.gensalt()).decode()
+        new_user = User.objects.create(
+            first_name = request.POST['first_name'],
+            last_name = request.POST['last_name'],
+            email = request.POST['email'],
+            hashpass = new_passwordHash,
+        )
+        request.session['user_id'] = new_user.id
+
+    return redirect('/')
 
