@@ -338,15 +338,16 @@ def stats_comp(request):
         print(key, resp_json_stats[key])
     return redirect('/')
 
+# Registration page
 def registration(request):
     return render(request, "register.html")
 
-def createUser(request):
+# User creation method
+def create_user(request):
     if request.method != 'POST':
         return redirect('/')
     errors = User.objects.basic_validator(request.POST)
     if len(errors) > 0:
-        console.log(errors)
         for key, value in errors.items():
             messages.error(request, value)
     else:
@@ -360,5 +361,22 @@ def createUser(request):
         )
         request.session['user_id'] = new_user.id
 
+    return redirect('/')
+
+# Login Page
+def login_page(request):
+    return render(request, 'login.html')
+
+# Login Function
+def sign_in(request):
+    if request.method != 'POST':
+        return redirect('/')
+    errors = User.objects.login_validator(request.POST)
+    if len(errors) > 0:
+        for key, value in errors.items():
+            messages.error(request, value)
+        return redirect('/login')
+    logged_in = User.objects.filter(username=request.POST['login_username'])
+    request.session['user_id'] = logged_in[0].id
     return redirect('/')
 
