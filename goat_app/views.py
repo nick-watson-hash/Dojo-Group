@@ -1,12 +1,17 @@
 from django.shortcuts import render,redirect
-import requests, json, random, bcrypt, messages
+from django.contrib import messages
+import requests, json, random, bcrypt
 from .models import User, GOAT, GOATdb, Matchup
 
 def index(request):
-    user=User.objects.get(id=2)
+    # Check for user_id in session
+    if 'user_id' in request.session:
+        user = User.objects.get(id=request.session['user_id'])
+    user = User.objects.get(id=2)
     context={
         'user':User.objects.get(id=2),
         'goats':GOAT.objects.filter(creator=user),
+        'current_user':user,
         # 'goat1':request.session['goat1'],
         # 'goat2':request.session['goat2'],
         # 'rand_goat1':request.session['g1'],
