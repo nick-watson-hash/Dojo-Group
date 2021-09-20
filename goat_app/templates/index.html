@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
+
 <body>
 
     <p> Hello {{current_user.first_name}}</p>
@@ -28,7 +30,7 @@
     <p>Bank: {{user.bank}}</p>
     <a href='/run_bet'>Let's Go!</a>
     <p>
-    <a href='/create'>Add GOAT</a>
+        <a href='/create'>Add GOAT</a>
     </p>
     <p>Pick Matchup player 1</p>
 
@@ -38,30 +40,31 @@
         <datalist id='goats'>
             {%for goat in goats%}
             <option value="{{goat.first_name}} {{goat.last_name}}">
-            {%endfor%}
+                {%endfor%}
         </datalist>
         <p>Pick Matchup player 2</p>
         <input list="goats" name="player2_goat">
         <datalist id='goats'>
             {%for goat in goats%}
             <option value="{{goat.first_name}} {{goat.last_name}}">
-            {%endfor%}
+                {%endfor%}
         </datalist>
         <input type="submit">
     </form>
-<a href='/matchup_picker'>Create Matchup from List</a>
+    <a href='/matchup_picker'>Create Matchup from List</a>
 
-<h4>Current Matchup from List</h4>
-{{goat1}} vs
-{{goat2}}
+    <h4>Current Matchup from List</h4>
+    {{goat1}} vs
+    {{goat2}}
 
-<h4>Current Matchup Random</h4>
-<p><a href='/random_match'>Create Random Match</a></p>
-{{rand_goat1}} vs
-{{rand_goat2}}
+    <h4>Current Matchup Random</h4>
+    <p><a href='/random_match'>Create Random Match</a></p>
+    {{rand_goat1}} vs
+    {{rand_goat2}}
 
-<p>
-    <a href='/stats_comp'>Stats Comp</a>
-</p>
+    <p>
+        <a href='/stats_comp'>Stats Comp</a>
+    </p>
 </body>
+
 </html>
