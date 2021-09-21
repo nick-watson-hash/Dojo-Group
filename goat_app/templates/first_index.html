@@ -39,6 +39,14 @@
         <input type='text' name='guess_custom'>
         <button type="submit">submit</button>
     </form>
+    {% if messages %}
+    <ul>
+        {% for message in messages %}
+        <li>{{message}}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    </ul>
 
     <h2>or use the random goat battle generator!</h2>
     <p><a href='/random_match'>Click to Create Random Match</a></p>

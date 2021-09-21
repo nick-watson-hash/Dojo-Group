@@ -57,8 +57,17 @@
         <input type='text' name='bet_random'>
         <label for='guess_random'>Guess</label>
         <input type='text' name='guess_random'>
+        <!-- <a href='/run_bet_random'>run bet</a> -->
         <button type="submit">submit</button>
     </form>
+    {% if messages %}
+    <ul>
+        {% for message in messages %}
+        <li>{{message}}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    </ul>
 
     <p></p>
     <a href='/logout'>Logout</a>

@@ -3,7 +3,6 @@ import requests, json, random, bcrypt
 from django.contrib import messages
 from .models import User, GOAT, GOATdb, Matchup
 
-
 def landing_page(request):
     return render(request, "landing_page.html")
 
@@ -40,46 +39,41 @@ def sign_in(request):
     return redirect('/first_index')
 
 def first_index(request):
-    if 'user_id' not in request.session:
-        return redirect('/')
-    login_check = ""
-    if 'user_id' in request.session:
-        login_check = User.objects.get(id=request.session['user_id'])
-    # user=User.objects.get(id=2)
     context={
-        'user':login_check,
+        'user':User.objects.get(id=request.session['user_id']),
         'goats':GOATdb.objects.all(),
     }
     return render(request, 'first_index.html', context)
 
 def second_index(request):
+    user=User.objects.get(id=request.session['user_id'])
     context={
-        # 'goats':GOATdb.objects.all(),
-        # 'goat1':request.session['goat1'],
-        # 'goat2':request.session['goat2'],
+        'user':User.objects.get(id=request.session['user_id']),
         'rand_goat1':request.session['g1'],
         'rand_goat2':request.session['g2']
     }
     return render(request, 'second_index.html', context)
 
 def run_bet_custom(request):
+    goat1=request.POST['player1_goat']
+    goat2=request.POST['player2_goat']
+    if request.POST['guess_custom'] not in [goat1, goat2]:
+        messages.error(request, 'Please pick one of the players you selected, cheater')
+        return redirect('/first_index')
+    errors = User.objects.bet_validator_custom(request.POST)
+    if len(errors) > 0:
+        for key, value in errors.items():
+            messages.error(request, value)
+            return redirect('/first_index')
     # need to update user with user from session.
     # this model is taking the names from the created custom match and pulling the player stats from the api, comparing them, generating the winner_name
     # and updating the Matchup object's "winner" attribute
     # and also updating the user's bank based on thier guess (won or lost)
     # currently this method redirects to a new page, i did that only becuase it was easier for testing
-    goat1=request.POST['player1_goat']
-    print(goat1)
-    # player1=GOATdb.objects.get(full_name=goat1)
-    # print(player1.id)
-    goat2=request.POST['player2_goat']
-    print(goat2)
-    # player2=GOATdb.objects.get(full_name=goat2)
-    # print(player2.id)
+
     user=User.objects.get(id=request.session['user_id'])
     bank=user.bank
     bet=request.POST['bet_custom']
-    # match=Matchup.objects.get(id=request.session['match_id'])
     querry1= goat1
     print(querry1)
     url = "https://nba-stats4.p.rapidapi.com/players/"
@@ -224,114 +218,127 @@ def random_match(request):
     request.session['g2']=rp2
     return redirect('/second_index')
 
-def run_bet_random(request):
-    # need to update user with user from session.
     # This method also creates the matchup for the model class
     # this model is taking the names from the created custom match and pulling the player stats from the api, comparing them, generating the winner_name
     # and updating the Matchup object's "winner" attribute
     # and also updating the user's bank based on thier guess (won or lost)
     # currently this method redirects to a new page, i did that only becuase it was easier for testing
+def run_bet_random(request):
     user=User.objects.get(id=request.session['user_id'])
     bank=user.bank
     random_bet=request.POST['bet_random']
-    # match=Matchup.objects.get(id=request.session['match_id'])
     random_querry1= request.session['g1']
-    print(random_querry1)
-    url = "https://nba-stats4.p.rapidapi.com/players/"
-    querystring = {"page":"1","full_name":random_querry1,"per_page":"50"}
-    headers = {
-        'x-rapidapi-host': "nba-stats4.p.rapidapi.com",
-        'x-rapidapi-key': "4622709193msh2b7cd6a6ebba26bp101347jsn0d99950ce664"
-        }
-    response = requests.request("GET", url, headers=headers, params=querystring)
-    print(response)
-    random_resp_json=response.json()
-    print(random_resp_json)
-    random_player1_id=(random_resp_json[0]['id'])
-    print(random_player1_id)
-    url = "https://nba-stats4.p.rapidapi.com/per_game_career_regular_season/"
-    headers = {
-        'x-rapidapi-host': "nba-stats4.p.rapidapi.com",
-        'x-rapidapi-key': "4622709193msh2b7cd6a6ebba26bp101347jsn0d99950ce664"
-        }
-    response = requests.request("GET", url+str(random_player1_id), headers=headers)
-    print(response)
-    random_resp_json_stats_p1=response.json()
-    print(random_resp_json_stats_p1)
-    random_player_name_p1=(random_resp_json[0]['full_name'])
-    print(random_player_name_p1)
     random_querry2= request.session['g2']
+    print(random_querry1)
     print(random_querry2)
-    url = "https://nba-stats4.p.rapidapi.com/players/"
-    querystring = {"page":"1","full_name":random_querry2,"per_page":"50"}
-    headers = {
-        'x-rapidapi-host': "nba-stats4.p.rapidapi.com",
-        'x-rapidapi-key': "4622709193msh2b7cd6a6ebba26bp101347jsn0d99950ce664"
-        }
-    response = requests.request("GET", url, headers=headers, params=querystring)
-    print(response)
-    random_resp_json=response.json()
-    print(random_resp_json)
-    random_player2_id=(random_resp_json[0]['id'])
-    print(random_player2_id)
-    url = "https://nba-stats4.p.rapidapi.com/per_game_career_regular_season/"
-    headers = {
-        'x-rapidapi-host': "nba-stats4.p.rapidapi.com",
-        'x-rapidapi-key': "4622709193msh2b7cd6a6ebba26bp101347jsn0d99950ce664"
-        }
-    response = requests.request("GET", url+str(random_player2_id), headers=headers)
-    print(response)
-    random_resp_json_stats_p2=response.json()
-    print(random_resp_json_stats_p2)
-    random_player_name_p2=(random_resp_json[0]['full_name'])
-    print(random_player_name_p2)
-    random_new_list_p1 = _extracted_from_run_bet_random_62(
-        random_resp_json_stats_p1
-    )
-
-    random_new_list_p2 = _extracted_from_run_bet_random_62(
-        random_resp_json_stats_p2
-    )
-
-    print(len(random_new_list_p1))
-    print(len(random_new_list_p2))
-    random_p1_points=0
-    random_p2_points=0
-    for x in range(len(random_new_list_p1)):
-            if random_new_list_p1[x] > random_new_list_p2[x]:
-                random_p1_points+=1
-            elif random_new_list_p1[x] < random_new_list_p2[x]:
-                random_p2_points+=1
-            # elif p1 == p2:
-            #     continue
-    print(random_p1_points)
-    print(random_p2_points)
-    random_new_match=Matchup.objects.create(
-        goat1_id=random_player1_id,
-        goat2_id=random_player2_id,
-        user=user
-    )
-    if random_p1_points > random_p1_points:
-        random_new_match.winner=random_player1_id
-        random_winner_name=random_querry1
-    else: 
-        random_new_match.winner=random_player2_id
-        random_new_match.save()
-        random_winner_name=random_querry2
-    print(random_new_match.winner)
-    print(random_winner_name)
-    request.session['random_winner'] = random_winner_name
-    print(bank)
-    print(random_bet)
-    if request.POST['guess_random']==random_winner_name:
-        user.bank=int(bank)+int(random_bet)
+    print(request.POST['guess_random'] )
+    guess=request.POST['guess_random']
+    print(guess)
+    if guess not in [random_querry1, random_querry2]:
+        messages.error(request, 'Please pick one of the randomly selected players provided, cheater')
+        return redirect('/second_index')
+    errors = User.objects.bet_validator_random(request.POST)
+    if len(errors) > 0:
+        for key, value in errors.items():
+            messages.error(request, value)
+            return redirect('/second_index')
     else:
-        user.bank=int(bank)-int(random_bet)
-    user.save()
-    print(user.bank)
-    return redirect('/random_winner_page')
+        print(random_querry1)
+        url = "https://nba-stats4.p.rapidapi.com/players/"
+        querystring = {"page":"1","full_name":random_querry1,"per_page":"50"}
+        headers = {
+            'x-rapidapi-host': "nba-stats4.p.rapidapi.com",
+            'x-rapidapi-key': "4622709193msh2b7cd6a6ebba26bp101347jsn0d99950ce664"
+            }
+        response = requests.request("GET", url, headers=headers, params=querystring)
+        print(response)
+        random_resp_json=response.json()
+        print(random_resp_json)
+        random_player1_id=(random_resp_json[0]['id'])
+        print(random_player1_id)
+        url = "https://nba-stats4.p.rapidapi.com/per_game_career_regular_season/"
+        headers = {
+            'x-rapidapi-host': "nba-stats4.p.rapidapi.com",
+            'x-rapidapi-key': "4622709193msh2b7cd6a6ebba26bp101347jsn0d99950ce664"
+            }
+        response = requests.request("GET", url+str(random_player1_id), headers=headers)
+        print(response)
+        random_resp_json_stats_p1=response.json()
+        print(random_resp_json_stats_p1)
+        random_player_name_p1=(random_resp_json[0]['full_name'])
+        print(random_player_name_p1)
+        # random_querry2= request.session['g2']
+        print(random_querry2)
+        url = "https://nba-stats4.p.rapidapi.com/players/"
+        querystring = {"page":"1","full_name":random_querry2,"per_page":"50"}
+        headers = {
+            'x-rapidapi-host': "nba-stats4.p.rapidapi.com",
+            'x-rapidapi-key': "4622709193msh2b7cd6a6ebba26bp101347jsn0d99950ce664"
+            }
+        response = requests.request("GET", url, headers=headers, params=querystring)
+        print(response)
+        random_resp_json=response.json()
+        print(random_resp_json)
+        random_player2_id=(random_resp_json[0]['id'])
+        print(random_player2_id)
+        url = "https://nba-stats4.p.rapidapi.com/per_game_career_regular_season/"
+        headers = {
+            'x-rapidapi-host': "nba-stats4.p.rapidapi.com",
+            'x-rapidapi-key': "4622709193msh2b7cd6a6ebba26bp101347jsn0d99950ce664"
+            }
+        response = requests.request("GET", url+str(random_player2_id), headers=headers)
+        print(response)
+        random_resp_json_stats_p2=response.json()
+        print(random_resp_json_stats_p2)
+        random_player_name_p2=(random_resp_json[0]['full_name'])
+        print(random_player_name_p2)
+        random_new_list_p1 = _extracted_from_run_bet_random_70(
+            random_resp_json_stats_p1
+        )
 
-def _extracted_from_run_bet_random_62(arg0):
+        random_new_list_p2 = _extracted_from_run_bet_random_70(
+            random_resp_json_stats_p2
+        )
+
+        print(len(random_new_list_p1))
+        print(len(random_new_list_p2))
+        random_p1_points=0
+        random_p2_points=0
+        for x in range(len(random_new_list_p1)):
+                if random_new_list_p1[x] > random_new_list_p2[x]:
+                    random_p1_points+=1
+                elif random_new_list_p1[x] < random_new_list_p2[x]:
+                    random_p2_points+=1
+                # elif p1 == p2:
+                #     continue
+        print(random_p1_points)
+        print(random_p2_points)
+        random_new_match=Matchup.objects.create(
+            goat1_id=random_player1_id,
+            goat2_id=random_player2_id,
+            user=user
+        )
+        if random_p1_points > random_p1_points:
+            random_new_match.winner=random_player1_id
+            random_winner_name=random_querry1
+        else: 
+            random_new_match.winner=random_player2_id
+            random_new_match.save()
+            random_winner_name=random_querry2
+        print(random_new_match.winner)
+        print(random_winner_name)
+        request.session['random_winner'] = random_winner_name
+        print(bank)
+        print(random_bet)
+        if request.POST['guess_random']==random_winner_name:
+            user.bank=int(bank)+int(random_bet)
+        else:
+            user.bank=int(bank)-int(random_bet)
+        user.save()
+        print(user.bank)
+        return redirect('/random_winner_page')
+
+def _extracted_from_run_bet_random_70(arg0):
     random_list_p1 = arg0.values()
     print(random_list_p1)
     result = []
@@ -352,7 +359,7 @@ def _extracted_from_run_bet_random_62(arg0):
 def random_winner_page(request):
     context={
         'random_winner': request.session['random_winner'],
-        'user': User.objects.get(id=2)
+        'user': User.objects.get(id=request.session['user_id'])
     }
     return render(request, 'random_winner_page.html', context)
 
@@ -366,6 +373,9 @@ def edit_user(request):
     profile_edit.email = request.POST['email_edit']
     profile_edit.save()
     return redirect('/profile')
+
+def profile(request):
+    return render(request, 'profile.html')
 
 def logout(request):
     request.session.flush()

@@ -41,6 +41,18 @@ class UserManager(models.Manager):
             errors ['login_pass'] = "Incorrect email or password"
         return errors
 
+    def bet_validator_custom(self, postData):
+        return self._extracted_from_bet_validator_random_2(postData, 'bet_custom')
+
+    def bet_validator_random(self, postData):
+        return self._extracted_from_bet_validator_random_2(postData, 'bet_random')
+
+    def _extracted_from_bet_validator_random_2(self, postData, arg1):
+        errors = {}
+        if postData[arg1] == '':
+            errors[arg1] = 'Enter a bet, coward'
+        return errors
+
 class User(models.Model):
     first_name=models.CharField(max_length=15)
     last_name=models.CharField(max_length=15)
