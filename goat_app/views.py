@@ -40,9 +40,14 @@ def sign_in(request):
     return redirect('/first_index')
 
 def first_index(request):
-    user=User.objects.get(id=2)
+    if 'user_id' not in request.session:
+        return redirect('/')
+    login_check = ""
+    if 'user_id' in request.session:
+        login_check = User.objects.get(id=request.session['user_id'])
+    # user=User.objects.get(id=2)
     context={
-        'user':User.objects.get(id=request.session['user_id']),
+        'user':login_check,
         'goats':GOATdb.objects.all(),
     }
     return render(request, 'first_index.html', context)
