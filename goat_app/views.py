@@ -3,7 +3,13 @@ from django.contrib import messages
 import requests, json, random, bcrypt
 from .models import User, GOAT, GOATdb, Matchup
 
+# Registration & Login page
+def landing_page(request):
+    return render(request, "landing_page.html")
+
 def index(request):
+    if 'user_id' not in request.session:
+        return redirect('/')
     # Check for user_id in session
     login_check = ""
     if 'user_id' in request.session:
@@ -345,10 +351,6 @@ def stats_comp(request):
         print(key, resp_json_stats[key])
     return redirect('/')
 
-# Registration page
-def registration(request):
-    return render(request, "register.html")
-
 # User creation method
 def create_user(request):
     if request.method != 'POST':
@@ -369,10 +371,6 @@ def create_user(request):
         request.session['user_id'] = new_user.id
 
     return redirect('/')
-
-# Login Page
-def login_page(request):
-    return render(request, 'login.html')
 
 # Login Method
 def sign_in(request):

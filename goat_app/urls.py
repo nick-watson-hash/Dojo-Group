@@ -2,12 +2,10 @@ from django.urls import path
 from . import views
 
 urlpatterns=[
-    path('', views.index),
+    path('', views.landing_page),
     path('results', views.results),
     # path('pick', views.pick),
-    path('register', views.registration),
     path('create_user', views.create_user),
-    path('login_page', views.login_page),
     path('logout', views.logout),
     path('sign_in', views.sign_in),
     path('player_search', views.player_search),
