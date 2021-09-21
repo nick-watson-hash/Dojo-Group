@@ -145,7 +145,7 @@ def player_search(request):
     return render(request, 'create.html', context)
 
 def create(request):
-    user=User.objects.get(id=2)
+    user=User.objects.get(id=request.session['user_id'])
     players = GOAT.objects.filter(creator=user)
     context={
         'goats': players,
