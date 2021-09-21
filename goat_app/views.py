@@ -15,10 +15,10 @@ def index(request):
     if 'user_id' in request.session:
         login_check = User.objects.get(id=request.session['user_id'])
 
-    user = User.objects.get(id=request.session['user_id'])
+    # user = User.objects.get(id=request.session['user_id'])
     context={
-        'user':user,
-        'goats':GOAT.objects.filter(creator=user),
+        'user':login_check,
+        'goats':GOAT.objects.filter(creator=login_check),
         'current_user':login_check,
         # 'goat1':request.session['goat1'],
         # 'goat2':request.session['goat2'],
