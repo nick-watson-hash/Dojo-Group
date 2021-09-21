@@ -194,14 +194,8 @@ def winner_page(request):
     return render(request, 'winner_page.html', context)
 
 def matchup_maker(request):
-    goat1=request.POST['player1_goat']
-    print(goat1)
-    player1=GOAT.objects.get(full_name=goat1)
-    print(player1.id)
-    goat2=request.POST['player2_goat']
-    print(goat2)
-    player2=GOAT.objects.get(full_name=goat2)
-    print(player2.id)
+    player1 = _extracted_from_matchup_maker_2(request, 'player1_goat')
+    player2 = _extracted_from_matchup_maker_2(request, 'player2_goat')
     user=User.objects.get(id=request.session['user_id'])
     new_match=Matchup.objects.create(
         goat1_id=player1.id,
@@ -209,6 +203,13 @@ def matchup_maker(request):
         user=user
     )
     return redirect('/')
+
+def _extracted_from_matchup_maker_2(request, arg1):
+    goat1 = request.POST[arg1]
+    print(goat1)
+    result = GOAT.objects.get(full_name=goat1)
+    print(result.id)
+    return result
 
 def matchup_picker(request):
     matches=Matchup.objects.all()
