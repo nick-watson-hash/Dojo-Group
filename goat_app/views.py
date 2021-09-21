@@ -1,18 +1,61 @@
 from django.shortcuts import render,redirect
-import requests, json, random
+import requests, json, random, bcrypt
+from django.contrib import messages
 from .models import User, GOAT, GOATdb, Matchup
 
-def index(request):
+
+def landing_page(request):
+    return render(request, "landing_page.html")
+
+def create_user(request):
+    if request.method != 'POST':
+        return redirect('/')
+    errors = User.objects.basic_validator(request.POST)
+    if len(errors) > 0:
+        for key, value in errors.items():
+            messages.error(request, value)
+            return redirect('/')
+    else:
+        new_password = request.POST['password']
+        new_passwordHash = bcrypt.hashpw(new_password.encode(), bcrypt.gensalt()).decode()
+        new_user = User.objects.create(
+            first_name = request.POST['first_name'],
+            last_name = request.POST['last_name'],
+            email = request.POST['email'],
+            hashpass = new_passwordHash,
+        )
+        request.session['user_id'] = new_user.id
+    return redirect('/first_index')
+
+def sign_in(request):
+    if request.method != 'POST':
+        return redirect('/')
+    errors = User.objects.login_validator(request.POST)
+    if len(errors) > 0:
+        for key, value in errors.items():
+            messages.error(request, value)
+        return redirect('/')
+    logged_in = User.objects.filter(email=request.POST['login_email'])
+    request.session['user_id'] = logged_in[0].id
+    return redirect('/first_index')
+
+def first_index(request):
     user=User.objects.get(id=2)
     context={
         'user':User.objects.get(id=2),
         'goats':GOATdb.objects.all(),
-        'goat1':request.session['goat1'],
-        'goat2':request.session['goat2'],
+    }
+    return render(request, 'first_index.html', context)
+
+def second_index(request):
+    context={
+        # 'goats':GOATdb.objects.all(),
+        # 'goat1':request.session['goat1'],
+        # 'goat2':request.session['goat2'],
         'rand_goat1':request.session['g1'],
         'rand_goat2':request.session['g2']
     }
-    return render(request, 'index.html', context)
+    return render(request, 'second_index.html', context)
 
 def run_bet_custom(request):
     # need to update user with user from session.
@@ -180,7 +223,7 @@ def random_match(request):
     print(rp2)
     request.session['g1']=rp1
     request.session['g2']=rp2
-    return redirect('/')
+    return redirect('/second_index')
 
 def run_bet_random(request):
     # need to update user with user from session.
@@ -324,267 +367,6 @@ def random_winner_page(request):
     }
     return render(request, 'random_winner_page.html', context)
 
-# def matchup_maker(request):
-#     # this method is creating the custom match to include the names picked by the user, user must click submit.
-#     # the names available are pre-loaded by admin into the GOATdb model class.  The admin can add more names too the model (to grow the list) but needs to use the api to retrieve the player_id
-#     # for the player_id attribute
-#     goat1=request.POST['player1_goat']
-#     print(goat1)
-#     player1=GOATdb.objects.get(full_name=goat1)
-#     print(player1.id)
-#     goat2=request.POST['player2_goat']
-#     print(goat2)
-#     player2=GOATdb.objects.get(full_name=goat2)
-#     print(player2.id)
-#     user=User.objects.get(id=2)
-#     new_match=Matchup.objects.create(
-#         goat1_id=player1.id,
-#         goat2_id=player2.id,
-#         user=user
-#     )
-#     request.session['goat1']= goat1
-#     request.session['goat2']= goat2
-#     request.session['match_id']=new_match.id
-#     return redirect('/')
-
-# def results(request):
-#     querry=request.POST["search"]
-#     url = "https://nba-stats4.p.rapidapi.com/players/"
-#     querystring = {"page":"1","full_name":querry,"per_page":"50"}
-#     headers = {
-#         'x-rapidapi-host': "nba-stats4.p.rapidapi.com",
-#         'x-rapidapi-key': "4622709193msh2b7cd6a6ebba26bp101347jsn0d99950ce664"
-#         }
-#     response = requests.request("GET", url, headers=headers, params=querystring)
-#     print(response)
-#     resp_json=response.json()
-#     print(resp_json)
-#     player_id=(resp_json[0]['id'])
-#     print(player_id)
-#     url = "https://nba-stats4.p.rapidapi.com/per_game_career_regular_season/"
-#     headers = {
-#         'x-rapidapi-host': "nba-stats4.p.rapidapi.com",
-#         'x-rapidapi-key': "4622709193msh2b7cd6a6ebba26bp101347jsn0d99950ce664"
-#         }
-#     response = requests.request("GET", url+str(player_id), headers=headers)
-#     print(response)
-#     resp_json_stats=response.json()
-#     print(resp_json_stats)
-#     player_name=(resp_json[0]['full_name'])
-#     for key in resp_json_stats:
-#         print(key, resp_json_stats[key])
-#     context={
-#         'player':player_name,
-#         'stats':resp_json_stats
-#     }
-#     return render(request, 'results.html', context)
-
-# def submit_custom(request):
-#     user=User.objects.get(id=2)
-#     print(user.first_name)
-#     user.bet = request.POST['bet']
-#     user.vote= request.POST['guess']
-#     user.save()
-#     print(user.bet)
-#     print(user.vote)
-#     print(user.bank)
-#     return redirect('/')
-
-# def pick(request):
-#     user=User.objects.get(id=2)
-#     bank=user.bank
-#     list = ['cat', 'dog', 'horse']
-#     pick=(random.choice(list))
-#     print(pick)
-#     x = request.POST['guess'] 
-#     wager=int(request.POST['bet'])
-#     print(wager)
-#     if x == pick:
-#         user.bank=bank+wager
-#         user.save()
-#         print(user.bank)
-#     else:
-#         user.bank=bank-wager
-#         user.save()
-#         print(user.bank)
-#     context={
-#         'thing':pick,
-#         'balance':user.bank
-#     }
-#     return render(request,'results.html', context)
-
-# def player_search(request):
-#     querry=request.POST["search"]
-#     url = "https://nba-stats4.p.rapidapi.com/players/"
-#     querystring = {"page":"1","full_name":querry,"per_page":"50"}
-#     headers = {
-#         'x-rapidapi-host': "nba-stats4.p.rapidapi.com",
-#         'x-rapidapi-key': "4622709193msh2b7cd6a6ebba26bp101347jsn0d99950ce664"
-#         }
-#     response = requests.request("GET", url, headers=headers, params=querystring)
-#     print(response)
-#     resp_json=response.json()
-#     print(resp_json)
-#     player_id=(resp_json[0]['id'])
-#     print(player_id)
-#     url = "https://nba-stats4.p.rapidapi.com/per_game_career_regular_season/"
-#     headers = {
-#         'x-rapidapi-host': "nba-stats4.p.rapidapi.com",
-#         'x-rapidapi-key': "4622709193msh2b7cd6a6ebba26bp101347jsn0d99950ce664"
-#         }
-#     response = requests.request("GET", url+str(player_id), headers=headers)
-#     print(response)
-#     resp_json_stats=response.json()
-#     print(resp_json_stats)
-#     player_name=(resp_json[0]['full_name'])
-#     for key in resp_json_stats:
-#         print(key, resp_json_stats[key])
-#     context={
-#         'player':player_name,
-#         'stats':resp_json_stats
-#     }
-#     request.session['current_goat_profile'] = resp_json
-#     request.session['current_goat_stats'] = resp_json_stats
-#     return render(request, 'create.html', context)
-
-# def create(request):
-#     user=User.objects.get(id=2)
-#     players = GOAT.objects.filter(creator=user)
-#     context={
-#         'goats': players,
-#     }
-#     return render(request, 'create.html', context)
-
-# def add_goat(request):
-#     user=User.objects.get(id=2)
-#     profile=request.session['current_goat_profile']
-#     print(profile[0]['id'])
-#     print(profile[0]['first_name'])
-#     print(profile[0]['last_name'])
-#     new_goat=GOAT.objects.create(
-#         first_name=profile[0]['first_name'],
-#         last_name=profile[0]['last_name'],
-#         full_name=profile[0]['full_name'],
-#         api_id=profile[0]['id'],
-#         creator=user
-#     )
-#     return redirect('/create')
-
-# def matchup_picker(request):
-#     matches=Matchup.objects.all()
-#     print(matches)
-#     match=(random.choice(matches))
-#     print(match)
-#     p1=match.goat1_id
-#     p2=match.goat2_id
-#     player1=GOAT.objects.get(id=p1).full_name
-#     player2=GOAT.objects.get(id=p2).full_name
-#     request.session['goat1']=player1
-#     request.session['goat2']=player2
-#     return redirect('/')
-
-# def stats_comp(request):
-#     goat_list=GOATdb.objects.all()
-#     player1=(random.choice(goat_list))
-#     print(player1)
-#     querry= player1.full_name
-#     print(querry)
-#     url = "https://nba-stats4.p.rapidapi.com/players/"
-#     querystring = {"page":"1","full_name":querry,"per_page":"50"}
-
-#     headers = {
-#         'x-rapidapi-host': "nba-stats4.p.rapidapi.com",
-#         'x-rapidapi-key': "4622709193msh2b7cd6a6ebba26bp101347jsn0d99950ce664"
-#         }
-    # response = requests.request("GET", url, headers=headers, params=querystring)
-    # print(response)
-    # resp_json=response.json()
-    # print(resp_json)
-    # player_id=(resp_json[0]['id'])
-    # print(player_id)
-    # url = "https://nba-stats4.p.rapidapi.com/per_game_career_regular_season/"
-    # headers = {
-    #     'x-rapidapi-host': "nba-stats4.p.rapidapi.com",
-    #     'x-rapidapi-key': "4622709193msh2b7cd6a6ebba26bp101347jsn0d99950ce664"
-    #     }
-    # response = requests.request("GET", url+str(player_id), headers=headers)
-    # print(response)
-    # resp_json_stats_p1=response.json()
-    # print(resp_json_stats_p1)
-    # player_name_p1=(resp_json[0]['full_name'])
-    # print(player_name_p1)
-    # player2=(random.choice(goat_list))
-    # print(player2)
-    # querry= player2.full_name
-    # print(querry)
-    # url = "https://nba-stats4.p.rapidapi.com/players/"
-    # querystring = {"page":"1","full_name":querry,"per_page":"50"}
-    # headers = {
-    #     'x-rapidapi-host': "nba-stats4.p.rapidapi.com",
-    #     'x-rapidapi-key': "4622709193msh2b7cd6a6ebba26bp101347jsn0d99950ce664"
-    #     }
-    # response = requests.request("GET", url, headers=headers, params=querystring)
-    # print(response)
-    # resp_json=response.json()
-    # print(resp_json)
-    # player_id=(resp_json[0]['id'])
-    # print(player_id)
-    # url = "https://nba-stats4.p.rapidapi.com/per_game_career_regular_season/"
-    # headers = {
-    #     'x-rapidapi-host': "nba-stats4.p.rapidapi.com",
-    #     'x-rapidapi-key': "4622709193msh2b7cd6a6ebba26bp101347jsn0d99950ce664"
-    #     }
-    # response = requests.request("GET", url+str(player_id), headers=headers)
-    # print(response)
-    # resp_json_stats_p2=response.json()
-    # print(resp_json_stats_p2)
-    # player_name_p2=(resp_json[0]['full_name'])
-    # print(player_name_p2)
-    # list_p1=resp_json_stats_p1.values()
-    # print(list_p1)
-    # new_list_p1=[]
-    # for item in list_p1:
-    #     if item!=None:
-    #         new_list_p1.append(item)
-    #     elif item==None:
-    #         print(item)
-    #         item=0
-    #         print(item)
-    #         new_list_p1.append(item)
-    #     print(item)
-    # print(new_list_p1)
-    # new_list_p1.pop(0)
-    # new_list_p1.pop(0)
-    # new_list_p1.pop(0)
-    # print(new_list_p1)
-    # list_p2=resp_json_stats_p2.values()
-    # print(list_p2)
-    # new_list_p2=[]
-    # for item in list_p2:
-    #     if item!=None:
-    #         new_list_p2.append(item)
-    #     elif item==None:
-    #         print(item)
-    #         item=0
-    #         print(item)
-    #         new_list_p2.append(item)
-    #     print(item)
-    # print(new_list_p2)
-    # new_list_p2.pop(0)
-    # new_list_p2.pop(0)
-    # new_list_p2.pop(0)
-    # print(new_list_p2)
-    # print(len(new_list_p1))
-    # print(len(new_list_p2))
-    # p1_points=0
-    # p2_points=0
-    # for x in range(len(new_list_p1)):
-    #         if new_list_p1[x] > new_list_p2[x]:
-    #             p1_points+=1
-    #         elif new_list_p1[x] < new_list_p2[x]:
-    #             p2_points+=1
-    #         # elif p1 == p2:
-    #         #     continue
-    # print(p1_points)
-    # print(p2_points)
-    # return redirect('/')
+def logout(request):
+    request.session.flush()
+    return redirect('/')
