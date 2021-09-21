@@ -383,7 +383,7 @@ def sign_in(request):
         return redirect('/login')
     logged_in = User.objects.filter(username=request.POST['login_username'])
     request.session['user_id'] = logged_in[0].id
-    return redirect('/')
+    return redirect('index')
 
 # Logout Method
 def logout(request):
