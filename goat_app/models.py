@@ -37,7 +37,7 @@ class UserManager(models.Manager):
             errors ['login_pass'] = "An eight character password must be entered"
         if not existing_users:
             errors ['login_pass'] = "Incorrect email or password"
-        elif bcrypt.checkpw(postData['login_pass'].encode(), existing_users[0].password.encode()) != True:
+        elif bcrypt.checkpw(postData['login_pass'].encode(), existing_users[0].hashpass.encode()) != True:
             errors ['login_pass'] = "Incorrect email or password"
         return errors
 
@@ -46,13 +46,10 @@ class User(models.Model):
     last_name=models.CharField(max_length=15)
     email=EmailField()
     bank=models.IntegerField(default=1000) 
-    bet=models.IntegerField(default=0) 
-    vote=models.CharField(max_length=155, null=True)
     hashpass=models.CharField(max_length=115)
     created_at=models.DateTimeField(auto_now_add=True)
     updated_at=models.DateTimeField(auto_now=True)
     objects = UserManager()
-
 
 class GOAT(models.Model):
     first_name=models.CharField(max_length=25)
