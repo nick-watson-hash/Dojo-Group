@@ -105,6 +105,8 @@ def submit(request):
 # NEED EDGE CASE FOR IF NAME DOES NOT APPEAR IN SEARCH LINE 106
 def player_search(request):
     querry=request.POST["search"]
+    # if request.POST["search"] == "":
+    #     return redirect('index')
     url = "https://nba-stats4.p.rapidapi.com/players/"
 
     querystring = {"page":"1","full_name":querry,"per_page":"50"}
@@ -193,6 +195,7 @@ def winner_page(request):
     }
     return render(request, 'winner_page.html', context)
 
+# Refactored matchup method
 def matchup_maker(request):
     player1 = _extracted_from_matchup_maker_2(request, 'player1_goat')
     player2 = _extracted_from_matchup_maker_2(request, 'player2_goat')
@@ -203,7 +206,7 @@ def matchup_maker(request):
         user=user
     )
     return redirect('/')
-
+# Recursive matchup method
 def _extracted_from_matchup_maker_2(request, arg1):
     goat1 = request.POST[arg1]
     print(goat1)
