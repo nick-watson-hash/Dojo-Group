@@ -376,6 +376,17 @@ def create_user(request):
 
     return redirect('/')
 
+# Edit user method
+def edit_user(request):
+    if 'user_id' not in request.session:
+        return redirect('/')
+    # Checks for user_id in request.session
+    if 'user_id' in request.session:
+        profile_edit = User.objects.get(id=request.session['user_id'])
+    profile_edit.email = request.POST['email_edit']
+    profile_edit.save()
+    return redirect('/profile')
+
 # Login Method
 def sign_in(request):
     if request.method != 'POST':
