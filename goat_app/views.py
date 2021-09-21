@@ -15,9 +15,9 @@ def index(request):
     if 'user_id' in request.session:
         login_check = User.objects.get(id=request.session['user_id'])
 
-    user = User.objects.get(id=2)
+    user = User.objects.get(id=request.session['user_id'])
     context={
-        'user':User.objects.get(id=2),
+        'user':user,
         'goats':GOAT.objects.filter(creator=user),
         'current_user':login_check,
         # 'goat1':request.session['goat1'],
@@ -68,7 +68,7 @@ def results(request):
     return render(request, 'results.html', context)
 
 def submit(request):
-    user=User.objects.get(id=2)
+    user=User.objects.get(id=request.session['user_id'])
     print(user.first_name)
     user.bet = request.POST['bet']
     user.vote= request.POST['guess']
@@ -154,7 +154,7 @@ def create(request):
     return render(request, 'create.html', context)
 
 def add_goat(request):
-    user=User.objects.get(id=2)
+    user=User.objects.get(id=request.session['user_id'])
     profile=request.session['current_goat_profile']
     print(profile[0]['id'])
     print(profile[0]['first_name'])
@@ -169,7 +169,7 @@ def add_goat(request):
     return redirect('/create')
 
 def run_bet(request):
-    user=User.objects.get(id=2)
+    user=User.objects.get(id=request.session['user_id'])
     bank=user.bank
     list = ['cat', 'dog', 'horse']
     pick=(random.choice(list))
@@ -189,7 +189,7 @@ def run_bet(request):
 def winner_page(request):
     context={
         'winner': request.session['winner'],
-        'user': User.objects.get(id=2)
+        'user': User.objects.get(id=request.session['user_id'])
     }
     return render(request, 'winner_page.html', context)
 
@@ -202,7 +202,7 @@ def matchup_maker(request):
     print(goat2)
     player2=GOAT.objects.get(full_name=goat2)
     print(player2.id)
-    user=User.objects.get(id=2)
+    user=User.objects.get(id=request.session['user_id'])
     new_match=Matchup.objects.create(
         goat1_id=player1.id,
         goat2_id=player2.id,
