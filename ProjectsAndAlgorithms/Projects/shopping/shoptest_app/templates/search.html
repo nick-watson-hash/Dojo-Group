@@ -11,9 +11,9 @@ NO REALLY BUY THE SOFTWARE
     {% if product_scan %}
     <div class="row mx-auto">
         {% for product in search_results %}
-        <div class="bottom_margin col-9 col-sm-12 col-md-4 col-md-12 col-lg-4">
+        <div class="bottom-margin col-9 col-sm-12 col-md-4 col-md-12 col-lg-4">
             <div class="card text-center" style="width: 18rem;">
-                <a href="{{product.get_url}}"> <img class="card-img-top category_image" src="{{product.image.url}}"
+                <a href="{{product.get_url}}"> <img class="card-img-top category-image" src="{{product.image.url}}"
                         alt="{{product.name}}"></a>
                 <div class="card-body">
                     <h4>{{product.name}}</h4>

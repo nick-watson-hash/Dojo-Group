@@ -58,8 +58,6 @@ class UserManager(models.Manager):
             errors ['password_edit'] = "A longer password needs to be entered"
         if len(postData['password_edit']) < 8:
             errors ['password_edit'] = "An eight character password must be entered"
-        if len(postData['password_edit']) < 8:
-            errors['password_edit'] = "Your password should be at least 8 characters"
         if (postData['password_edit'] != postData['password_editverify']):
             errors['password_editverify'] = "Your passwords do not match"
         return errors
