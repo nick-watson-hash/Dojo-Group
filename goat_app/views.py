@@ -5,13 +5,15 @@ from .models import User, GOAT, GOATdb, Matchup
 
 def index(request):
     # Check for user_id in session
+    login_check = ""
     if 'user_id' in request.session:
-        user = User.objects.get(id=request.session['user_id'])
+        login_check = User.objects.get(id=request.session['user_id'])
+
     user = User.objects.get(id=2)
     context={
         'user':User.objects.get(id=2),
         'goats':GOAT.objects.filter(creator=user),
-        'current_user':user,
+        'current_user':login_check,
         # 'goat1':request.session['goat1'],
         # 'goat2':request.session['goat2'],
         # 'rand_goat1':request.session['g1'],
@@ -372,7 +374,7 @@ def create_user(request):
 def login_page(request):
     return render(request, 'login.html')
 
-# Login Function
+# Login Method
 def sign_in(request):
     if request.method != 'POST':
         return redirect('/')
@@ -383,5 +385,10 @@ def sign_in(request):
         return redirect('/login')
     logged_in = User.objects.filter(username=request.POST['login_username'])
     request.session['user_id'] = logged_in[0].id
+    return redirect('/')
+
+# Logout Method
+def logout(request):
+    request.session.flush()
     return redirect('/')
 
