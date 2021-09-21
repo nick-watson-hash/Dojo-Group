@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GOAT Machine</title>
 </head>
+
 <body>
     <h1>create a matchup and place your bet!</h1>
     <p>Hello {{user.first_name}}</p>
@@ -19,16 +21,16 @@
         <p>Pick Matchup player 1</p>
         <input list="goats" name="player1_goat">
         <datalist id='goats'>
-        {%for goat in goats%}
-        <option value="{{goat.first_name}} {{goat.last_name}}">
-        {%endfor%}
+            {%for goat in goats%}
+            <option value="{{goat.first_name}} {{goat.last_name}}">
+                {%endfor%}
         </datalist>
         <p>Pick Matchup player 2</p>
         <input list="goats" name="player2_goat">
         <datalist id='goats'>
-        {%for goat in goats%}
-        <option value="{{goat.first_name}} {{goat.last_name}}">
-        {%endfor%}
+            {%for goat in goats%}
+            <option value="{{goat.first_name}} {{goat.last_name}}">
+            {%endfor%}
         </datalist>
         <p></p>
         <label for='bet_custom'>Bet</label>
@@ -40,14 +42,14 @@
 
     <h2>or use the random goat battle generator!</h2>
     <p><a href='/random_match'>Click to Create Random Match</a></p>
-        <p></p>
+    <p></p>
 
     <h1>random matchup</h1>
     Who? vs
     Who?
 
 
-<h3>place yur bet and cast your vote(random)</h3>
+    <h3>place yur bet and cast your vote(random)</h3>
 
     <form action='/run_bet_random' method='POST'>
         {%csrf_token%}
@@ -57,5 +59,5 @@
         <input type='text' name='guess_random'>
         <button type="submit">submit</button>
     </form>
-<p></p>
-<a href='/logout'>Logout</a>
+    <p></p>
+    <a href='/logout'>Logout</a>

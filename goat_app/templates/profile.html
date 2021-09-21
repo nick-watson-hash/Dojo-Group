@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -8,14 +9,15 @@
     {% load static %}
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
+
 <body>
     <div class='center-mass'>
         <h1>Edit your email</h1>
         {% if messages %}
         <ul>
-        {% for message in messages %}
-        <li>{{message}}</li>
-        {% endfor %}
+            {% for message in messages %}
+            <li>{{message}}</li>
+            {% endfor %}
         </ul>
         {% endif %}
         </ul>
@@ -26,4 +28,5 @@
         </form>
     </div>
 </body>
+
 </html>

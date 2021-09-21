@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Create List</title>
 </head>
+
 <body>
     <h1>Create List</h1>
     <form action='/player_search' method='POST'>
@@ -16,19 +18,20 @@
     </form>
     <h1>Player Name: {{player}}</h1>
 
-{{stats}}
+    {{stats}}
 
-<p>
-<a href='/add_goat'>Add GOAT</a>
-</p>
-<h4>My List</h4>
-{%for goat in goats %}
-<p>
-    {{goat.first_name}} {{goat.last_name}}
-</p>
-{%endfor%}
-<p>
-    <a href='/'>BET</a>
+    <p>
+        <a href='/add_goat'>Add GOAT</a>
+    </p>
+    <h4>My List</h4>
+    {%for goat in goats %}
+    <p>
+        {{goat.first_name}} {{goat.last_name}}
+    </p>
+    {%endfor%}
+    <p>
+        <a href='/'>BET</a>
     </p>
 </body>
+
 </html>
