@@ -190,7 +190,7 @@ def run_bet_custom(request):
     if p1_points > p1_points:
         new_match.winner=player1_id
         winner_name=querry1
-    else: 
+    else:
         new_match.winner=player2_id
         new_match.save()
         winner_name=querry2
