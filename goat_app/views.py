@@ -105,7 +105,7 @@ def submit(request):
 # NEED EDGE CASE FOR IF NAME DOES NOT APPEAR IN SEARCH LINE 106
 def player_search(request):
     querry=request.POST["search"]
-    # if request.POST["search"] == "":
+    # if request.POST["search"] == False:
     #     return redirect('index')
     url = "https://nba-stats4.p.rapidapi.com/players/"
 
@@ -376,6 +376,10 @@ def create_user(request):
 
     return redirect('/')
 
+# Registration & Login page
+def profile(request):
+    return render(request, "profile.html")
+
 # Edit user method
 def edit_user(request):
     if 'user_id' not in request.session:
@@ -385,7 +389,7 @@ def edit_user(request):
         profile_edit = User.objects.get(id=request.session['user_id'])
     profile_edit.email = request.POST['email_edit']
     profile_edit.save()
-    return redirect('/profile')
+    return redirect('profile')
 
 # Login Method
 def sign_in(request):
