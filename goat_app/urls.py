@@ -5,6 +5,7 @@ urlpatterns=[
     path('', views.landing_page),
     path('create_user', views.create_user),
     path('sign_in', views.sign_in),
+    path('edit_user', views.edit_user),
     path('first_index', views.first_index),
     path('random_match', views.random_match),
     path('second_index', views.second_index),

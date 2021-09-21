@@ -356,6 +356,17 @@ def random_winner_page(request):
     }
     return render(request, 'random_winner_page.html', context)
 
+# Edit user method
+def edit_user(request):
+    if 'user_id' not in request.session:
+        return redirect('/')
+    # Checks for user_id in request.session
+    if 'user_id' in request.session:
+        profile_edit = User.objects.get(id=request.session['user_id'])
+    profile_edit.email = request.POST['email_edit']
+    profile_edit.save()
+    return redirect('/profile')
+
 def logout(request):
     request.session.flush()
     return redirect('/')
