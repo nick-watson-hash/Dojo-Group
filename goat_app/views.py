@@ -57,7 +57,7 @@ def second_index(request):
 def run_bet_custom(request):
     goat1=request.POST['player1_goat']
     goat2=request.POST['player2_goat']
-    if request.POST['guess_custom'] not in [goat1, goat2]:
+    if ((request.POST['guess_custom'] != goat1) and (request.POST['guess_custom'] != goat2)):
         messages.error(request, 'Please pick one of the players you selected, cheater')
         return redirect('/first_index')
     errors = User.objects.bet_validator_custom(request.POST)
@@ -133,11 +133,13 @@ def run_bet_custom(request):
     print(list_p1)
     new_list_p1=[]
     for item in list_p1:
-        if item is None:
+        if item!=None:
+            new_list_p1.append(item)
+        elif item==None:
             print(item)
             item=0
             print(item)
-        new_list_p1.append(item)
+            new_list_p1.append(item)
         print(item)
     print(new_list_p1)
     new_list_p1.pop(0)
@@ -148,11 +150,13 @@ def run_bet_custom(request):
     print(list_p2)
     new_list_p2=[]
     for item in list_p2:
-        if item is None:
+        if item!=None:
+            new_list_p2.append(item)
+        elif item==None:
             print(item)
             item=0
             print(item)
-        new_list_p2.append(item)
+            new_list_p2.append(item)
         print(item)
     print(new_list_p2)
     new_list_p2.pop(0)
@@ -180,7 +184,7 @@ def run_bet_custom(request):
     if p1_points > p1_points:
         new_match.winner=player1_id
         winner_name=querry1
-    else:
+    else: 
         new_match.winner=player2_id
         new_match.save()
         winner_name=querry2
@@ -191,10 +195,12 @@ def run_bet_custom(request):
     print(bet)
     if request.POST['guess_custom']==winner_name:
         user.bank=int(bank)+int(bet)
+        user.save()
+        print(user.bank)
     else:
         user.bank=int(bank)-int(bet)
-    user.save()
-    print(user.bank)
+        user.save()
+        print(user.bank)
     return redirect('/winner_page')
 
 
@@ -232,9 +238,9 @@ def run_bet_random(request):
     print(random_querry1)
     print(random_querry2)
     print(request.POST['guess_random'] )
-    guess=request.POST['guess_random']
+    guess=request.POST['guess_random'] 
     print(guess)
-    if guess not in [random_querry1, random_querry2]:
+    if ((guess != random_querry1) and (guess != random_querry2)):
         messages.error(request, 'Please pick one of the randomly selected players provided, cheater')
         return redirect('/second_index')
     errors = User.objects.bet_validator_random(request.POST)
@@ -292,14 +298,40 @@ def run_bet_random(request):
         print(random_resp_json_stats_p2)
         random_player_name_p2=(random_resp_json[0]['full_name'])
         print(random_player_name_p2)
-        random_new_list_p1 = _extracted_from_run_bet_random_70(
-            random_resp_json_stats_p1
-        )
-
-        random_new_list_p2 = _extracted_from_run_bet_random_70(
-            random_resp_json_stats_p2
-        )
-
+        random_list_p1=random_resp_json_stats_p1.values()
+        print(random_list_p1)
+        random_new_list_p1=[]
+        for item in random_list_p1:
+            if item!=None:
+                random_new_list_p1.append(item)
+            elif item==None:
+                print(item)
+                item=0
+                print(item)
+                random_new_list_p1.append(item)
+            print(item)
+        print(random_new_list_p1)
+        random_new_list_p1.pop(0)
+        random_new_list_p1.pop(0)
+        random_new_list_p1.pop(0)
+        print(random_new_list_p1)
+        random_list_p2=random_resp_json_stats_p2.values()
+        print(random_list_p2)
+        random_new_list_p2=[]
+        for item in random_list_p2:
+            if item!=None:
+                random_new_list_p2.append(item)
+            elif item==None:
+                print(item)
+                item=0
+                print(item)
+                random_new_list_p2.append(item)
+            print(item)
+        print(random_new_list_p2)
+        random_new_list_p2.pop(0)
+        random_new_list_p2.pop(0)
+        random_new_list_p2.pop(0)
+        print(random_new_list_p2)
         print(len(random_new_list_p1))
         print(len(random_new_list_p2))
         random_p1_points=0
@@ -332,29 +364,13 @@ def run_bet_random(request):
         print(random_bet)
         if request.POST['guess_random']==random_winner_name:
             user.bank=int(bank)+int(random_bet)
+            user.save()
+            print(user.bank)
         else:
             user.bank=int(bank)-int(random_bet)
-        user.save()
-        print(user.bank)
+            user.save()
+            print(user.bank)
         return redirect('/random_winner_page')
-
-def _extracted_from_run_bet_random_70(arg0):
-    random_list_p1 = arg0.values()
-    print(random_list_p1)
-    result = []
-    for item in random_list_p1:
-        if item is None:
-            print(item)
-            item=0
-            print(item)
-        result.append(item)
-        print(item)
-    print(result)
-    result.pop(0)
-    result.pop(0)
-    result.pop(0)
-    print(result)
-    return result
 
 def random_winner_page(request):
     context={
