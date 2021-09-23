@@ -11,7 +11,7 @@
 </head>
 
 <body>
-    <div class='center-mass'>
+    <div class='winner'>
         <h1>Edit your email</h1>
         {% if messages %}
         <ul>
@@ -23,7 +23,7 @@
         </ul>
         <form action="/edit_user" method="POST">
             {% csrf_token %}
-            <p>Email: </p><input name="email_edit" type="text">
+            <p>Email: </p><input placeholder="{{user.email}}" name="email_edit" type="text">
             <button type="submit">Submit</button>
         </form>
     </div>
