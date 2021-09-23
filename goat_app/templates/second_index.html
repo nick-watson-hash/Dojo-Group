@@ -6,68 +6,165 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GOAT Machine</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/first_index.css' %}">
 </head>
+<body">
+    <header>
+        <nav class="nav_style">
+            <ul>
+                <li>Hello {{user.first_name}}</li>
+                <li>Your bank: {{user.bank}}</li>
+                <li><a href='/logout' class="logout" style="float:right">Logout</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section class="sims">
+            <section class="custom">
+                <div class="custom_heading">
+                    <h1 class="head_h1">Create A Custom Matchup!</h1>
+                    <p class="head_p">Select your players, place your bet and cast your vote!</p>
+                </div>
+                <div>
+                    <form action='/run_bet_custom' method='POST'>
+                        {%csrf_token%}
+                        <p>GOAT 1:</p>
+                        <input list="goats" name="player1_goat">
+                        <datalist id='goats'>
+                            {%for goat in goats%}
+                            <option value="{{goat.first_name}} {{goat.last_name}}">
+                            {%endfor%}
+                        </datalist>
+                        <p>GOAT 2</p>
+                        <input list="goats" name="player2_goat">
+                        <datalist id='goats'>
+                            {%for goat in goats%}
+                            <option value="{{goat.first_name}} {{goat.last_name}}">
+                            {%endfor%}
+                        </datalist>
+                        <label for='bet_custom'><p>Place Your Bet:</p></label>
+                        <input type='text' name='bet_custom'>
+                        <label for='guess_custom'><p>Guess the Outcome:</p></label>
+                        <input type='text' name='guess_custom'>
+                        <button type="submit">Run Custom Matchup</button>
+                        <!-- <button type="submit" id="btn" class="sbtn btn btn-secondary btn-c">Run Custom Matchup</button>
+                        <div class='spinner-displayer'></div>
+                        <script>
+                            function spinner() {
+                                const spinnerDisplayer = document.querySelector('.spinner-displayer');
+                                const btn = document.getElementById('btn');
 
-<body>
-    <h1>create a matchup and place your bet!</h1>
-    <p>Hello {{user.first_name}}</p>
-    <p>Your bank: {{user.bank}}</p>
-    <h4>Create a Matchup by selecting players</h4>
+                                btn.addEventListener('click', () => {
+                                spinnerDisplayer.classList.add('loading');
+                            })
+                            }
+                            spinner();
+                        </script>
+                        <style>
+                            * {
+                                margin: 0;
+                                padding: 0;
+                                }
 
-    <h3>place yur bet and cast your vote(custom)</h3>
+                                .loader {
+                                display: none;
+                                top: 50%;
+                                left: 50%;
+                                position: absolute;
+                                transform: translate(-50%, -50%);
+                                }
 
-    <form action='/run_bet_custom' method='POST'>
-        {%csrf_token%}
-        <p>Pick Matchup player 1</p>
-        <input list="goats" name="player1_goat">
-        <datalist id='goats'>
-            {%for goat in goats%}
-            <option value="{{goat.first_name}} {{goat.last_name}}">
-                {%endfor%}
-        </datalist>
-        <p>Pick Matchup player 2</p>
-        <input list="goats" name="player2_goat">
-        <datalist id='goats'>
-            {%for goat in goats%}
-            <option value="{{goat.first_name}} {{goat.last_name}}">
-                {%endfor%}
-        </datalist>
-        <p></p>
-        <label for='bet_custom'>Bet</label>
-        <input type='text' name='bet_custom'>
-        <label for='guess_custom'>Guess</label>
-        <input type='text' name='guess_custom'>
-        <button type="submit">submit</button>
-    </form>
-
-    <h2>or use the random goat battle generator!</h2>
-    <p><a href='/random_match'>Click to Create Random Match</a></p>
-    <p></p>
-
-    <h1>random matchup</h1>
-    {{rand_goat1}} vs
-    {{rand_goat2}}
-
-
-    <h3>place yur bet and cast your vote(random)</h3>
-
-    <form action='/run_bet_random' method='POST'>
-        {%csrf_token%}
-        <label for='bet_random'>Bet</label>
-        <input type='text' name='bet_random'>
-        <label for='guess_random'>Guess</label>
-        <input type='text' name='guess_random'>
-        <!-- <a href='/run_bet_random'>run bet</a> -->
-        <button type="submit">submit</button>
-    </form>
-    {% if messages %}
-    <ul>
-        {% for message in messages %}
-        <li>{{message}}</li>
-        {% endfor %}
-    </ul>
-    {% endif %}
-    </ul>
-
-    <p></p>
-    <a href='/logout'>Logout</a>
+                                .loading {
+                                border: 2px solid #ccc;
+                                width: 60px;
+                                height: 60px;
+                                border-radius: 50%;
+                                border-top-color: #1ecd97;
+                                border-left-color:  #1ecd97;
+                                animation: spin 1s infinite ease-in;
+                                }
+                                @keyframes spin {
+                                0% {
+                                    transform: rotate(0deg);
+                                }
+                                100% {
+                                    transform: rotate(360deg);
+                                }
+                            }
+                        </style> -->
+                    </form>
+                    {% if messages %}
+                    <ul>
+                        {% for message in messages %}
+                        <li>{{message}}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                    </ul>
+                </div>
+            </section>
+            <section class="random">
+                <div class="custom_heading">
+                    <h1 class="head_h1">Random Matchup Generator!</h1>
+                    <p class="head_p">Generate players randomly, place your bet and cast your vote!</p>
+                    <button><a class="random_a" href='/random_match'>Generate A Random Matchup</a></button>
+                    <h4>{{rand_goat1}} vs {{rand_goat2}}</h4>
+                </div>
+                <div>
+                    <form action='/run_bet_random' method='POST'>
+                        {%csrf_token%}
+                        <label for='bet_random'><p>Place Your Bet:</p></label>
+                        <input type='text' name='bet_random'>
+                        <label for='guess_random'><p>Guess the Outcome:</p></label>
+                        <input type='text' name='guess_random'>
+                        <!-- <button type="submit">Run Random Matchup</button> -->
+                        <button type="submit" id="btn" class="sbtn btn btn-secondary btn-c">Run Random Matchup</button>
+                        <div class='spinner-displayer'></div>
+                        <script>
+                            function spinner() {
+                                const spinnerDisplayer = document.querySelector('.spinner-displayer');
+                                const btn = document.getElementById('btn');
+                                btn.addEventListener('click', () => {
+                                spinnerDisplayer.classList.add('loading');
+                            })
+                            }
+                            spinner();
+                        </script>
+                        <style>
+                            * {
+                                margin: 0;
+                                padding: 0;
+                                }
+                                .loader {
+                                display: none;
+                                top: 50%;
+                                left: 50%;
+                                position: absolute;
+                                transform: translate(-50%, -50%);
+                                }
+                                .loading {
+                                border: 2px solid #ccc;
+                                width: 60px;
+                                height: 60px;
+                                border-radius: 50%;
+                                border-top-color: #1ecd97;
+                                border-left-color:  #1ecd97;
+                                animation: spin 1s infinite ease-in;
+                                }
+                                @keyframes spin {
+                                0% {
+                                    transform: rotate(0deg);
+                                }
+                                100% {
+                                    transform: rotate(360deg);
+                                }
+                                }
+                        </style>
+                    </form>
+                </div>
+            </section>
+        </section>
+    </main>
+</body>
+</html>

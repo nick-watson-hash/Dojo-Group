@@ -1,0 +1,191 @@
+@import url('https://fonts.googleapis.com/css2?family=Abel&family=Permanent+Marker&family=Stick+No+Bills&family=Montserrat+Alternates&display=swap');
+
+* {
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+}
+
+h1 {
+    font-family: 'Permanent Marker', cursive;
+    font-size: 23pt;
+}
+
+p {
+    font-family: 'Montserrat Alternates', sans-serif;    
+    font-size: 11pt;
+    margin: 10px 0 10px 0;
+}
+
+.head_p {
+    font-size:9pt;
+}
+
+.nav_style, h3 {
+    font-family: 'Permanent Marker', cursive;
+    font-size: 18pt;
+    color:rgb(0, 0, 0);
+}
+
+h4 {
+    font-family: 'Permanent Marker', cursive;
+    font-size: 15pt;
+}
+
+body {
+    margin-bottom: 0;
+    background-image: url("https://media.istockphoto.com/illustrations/basketball-court-with-wood-texture-basketball-tactical-court-illustration-id1212609648?k=20&m=1212609648&s=612x612&w=0&h=zu2wOuFSp3ITyzREz1q9kNWzhJq4PdvFTAj7E7gJrdM=");
+    background-position:center;
+}
+
+header {
+    background-color: rgba(181, 66, 19, .9);
+    padding: 20px;
+    border-bottom: 15px solid #fff;
+    box-shadow: 0 0 8px 0 rgb(34, 34, 34);
+    text-align: center;
+}
+
+nav {
+    display: inline-block;
+    width: 100%;
+    color: #fff;
+}
+
+ul {
+    list-style-type: none;
+    margin: 5px;
+}
+
+li {
+    display:inline-flex;
+    padding-right: 10%;
+}
+
+.logout {
+    color:rgb(0, 0, 0);
+    float: right;
+}
+
+main {
+    margin: 0;
+    width: 100%;
+}
+
+.sims {
+    display: flex;
+    margin: 20px 20px 0 0;
+}
+
+.custom, .random {
+    padding: 15px;
+    margin: 10px;
+    width: 100%;
+    border: 5px solid #fff;
+    border-radius: 15px;
+    box-shadow: 0 0 8px 0 rgb(34, 34, 34);
+}
+
+.custom {
+    background-image: linear-gradient(to bottom right,rgba(23, 64, 139, .92), rgba(33, 90, 196, .92));
+    color: white;
+}
+
+.head_p {
+    font-style: italic;
+}
+
+.random {
+    background-image: linear-gradient(to bottom right, rgba(201, 8, 42, .92), rgba(201, 8, 42, .92));
+    color: white;
+}
+
+form {
+    margin-top: 15px;
+    display: block;
+}
+
+input {
+    width: 100%;
+    padding: 10px;
+    margin: px 0;
+    display: flex;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+button {
+    padding:10px;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    background-color: rgba(255, 255, 255, .75);
+    font-family: 'Montserrat Alternates', sans-serif;    
+    font-size: 10pt;
+    font-weight: bolder;
+}
+
+.random_a {
+    text-decoration: none;
+    color: inherit;
+}
+
+
+
+
+
+
+/* EXTRAS  */
+
+/* SPINNER ATTEMPTS */
+
+.spinner {
+    display: inline-block;
+    opacity: 0;
+    max-width: 0;
+    -webkit-transition: opacity 0.25s, max-width 0.45s;
+    -moz-transition: opacity 0.25s, max-width 0.45s;
+    -o-transition: opacity 0.25s, max-width 0.45s;
+    transition: opacity 0.25s, max-width 0.45s;
+    /* Duration fixed since we animate additional hidden width */
+}
+
+.has-spinner.active {
+    cursor: progress;
+}
+
+.has-spinner.active .spinner {
+    opacity: 1;
+    max-width: 50px;
+    /* More than it will ever come, notice that this affects on animation duration */
+}
+
+/* ANOTHA TRY */
+
+.loader {
+    display: none;
+    top: 50%;
+    left: 50%;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    }
+
+.loading {
+    border: 2px solid #ccc;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    border-top-color: #1ecd97;
+    border-left-color:  #1ecd97;
+    animation: spin 1s infinite ease-in;
+    }
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}

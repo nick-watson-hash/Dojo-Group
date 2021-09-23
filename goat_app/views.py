@@ -181,7 +181,7 @@ def run_bet_custom(request):
         goat2_id=player2_id,
         user=user
     )
-    if p1_points > p1_points:
+    if p1_points > p2_points:
         new_match.winner=player1_id
         winner_name=querry1
     else: 
@@ -350,7 +350,7 @@ def run_bet_random(request):
             goat2_id=random_player2_id,
             user=user
         )
-        if random_p1_points > random_p1_points:
+        if random_p1_points > random_p2_points:
             random_new_match.winner=random_player1_id
             random_winner_name=random_querry1
         else: 

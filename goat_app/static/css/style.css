@@ -1,25 +1,110 @@
+@import url('https://fonts.googleapis.com/css2?family=Abel&family=Permanent+Marker&family=Stick+No+Bills&family=Montserrat+Alternates&display=swap');
+
 * {
     margin: 0px;
     padding: 0px;
+    box-sizing: border-box;
+}
+
+
+h1 {
+    font-family: 'Permanent Marker', cursive;
+    font-size: 23pt;
+}
+
+h2 {
+    font-family: 'Permanent Marker', cursive;
+    font-size: 30pt;
+}
+p {
+    font-family: 'Montserrat Alternates', sans-serif;    
+    font-size: 11pt;
+    align-self: center;
+    margin: 10px 0 10px 0;
+}
+
+h3 {
+    font-family: 'Permanent Marker', cursive;
+    font-size: 15pt;
+    color:rgb(0, 0, 0);
+}
+
+h4 {
+    font-family: 'Permanent Marker', cursive;
+    font-size: 15pt;
+}
+
+.random_a {
+    text-decoration: none;
+    color: inherit;
 }
 
 body {
     margin: 0px auto;
     height: 100%;
-    width: 60%;
+    width: 100%;
+    margin-bottom: 0;
+    background-image: url("https://media.istockphoto.com/illustrations/basketball-court-with-wood-texture-basketball-tactical-court-illustration-id1212609648?k=20&m=1212609648&s=612x612&w=0&h=zu2wOuFSp3ITyzREz1q9kNWzhJq4PdvFTAj7E7gJrdM=");
+    background-position:center;
 }
 
-.center-mass {
-    height: 80%;
-    width: 80%;
+
+header {
+    background-color: rgba(181, 66, 19, .9);
+    padding: 15px;
+    border-bottom: 10px solid #fff;
+    box-shadow: 0 0 8px 0 rgb(34, 34, 34);
+    width:100%;
+    overflow:hidden;
+    text-align: center;
+}
+
+nav {
+    display: inline;
+    width: 100%;
+    color: #fff;
+}
+
+main {
+    margin: 0;
+    width: 100%;
+}
+
+.log_reg {
     display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    border: solid 2px black;
-    padding: 30px;
-    margin: 30px;
+    margin: 20px 20px 0 0;
+}
+
+.log, .reg {
+    padding: 15px;
+    margin: 10px;
+    width: 100%;
+    border: 5px solid #fff;
+    border-radius: 15px;
+    box-shadow: 0 0 8px 0 rgb(34, 34, 34);
+}
+
+.winner {
+    padding: 15px;
+    margin: 10px;
+    width: 100%;
+    border: 5px solid #fff;
+    border-radius: 15px;
+    box-shadow: 0 0 8px 0 rgb(34, 34, 34);
+    text-align: center;
+    background-color: rgba(0, 0, 0, .9);
+    color: white;
+    max-width: 98%;
+}
+
+.log {
+    background-image: linear-gradient(to bottom right, rgba(201, 8, 42, .92), rgba(201, 8, 42, .92));
+    color: white;
+}
+
+.reg {
+    background-image: linear-gradient(to bottom right,rgba(23, 64, 139, .92), rgba(33, 90, 196, .92));
+    color: white;
 }
 
 table {
@@ -31,10 +116,33 @@ table {
 }
 
 form {
-    padding: 5%;
+    padding: 20px;
+    display:flexbox;
 }
 
 td {
     border: 1px solid black;
     padding: 1em;
 }
+
+button {
+    padding:10px;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    background-color: rgba(255, 255, 255, .75);
+    font-family: 'Montserrat Alternates', sans-serif;    
+    font-size: 10pt;
+    font-weight: bolder;
+}
+
+input {
+    width: 100%;
+    padding: 12px 20px;
+    margin: px 0;
+    display: flex;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
