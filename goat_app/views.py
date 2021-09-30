@@ -2,6 +2,10 @@ from django.shortcuts import render,redirect
 import requests, json, random, bcrypt
 from django.contrib import messages
 from .models import User, GOAT, GOATdb, Matchup
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
 
 def landing_page(request):
     return render(request, "landing_page.html")
@@ -80,7 +84,7 @@ def run_bet_custom(request):
     querystring = {"page":"1","full_name":querry1,"per_page":"50"}
     headers = {
         'x-rapidapi-host': "nba-stats4.p.rapidapi.com",
-        'x-rapidapi-key': "4622709193msh2b7cd6a6ebba26bp101347jsn0d99950ce664"
+        'x-rapidapi-key': os.getenv('API_key')
         }
     response = requests.request("GET", url, headers=headers, params=querystring)
     print(response)
@@ -91,7 +95,7 @@ def run_bet_custom(request):
     url = "https://nba-stats4.p.rapidapi.com/per_game_career_regular_season/"
     headers = {
         'x-rapidapi-host': "nba-stats4.p.rapidapi.com",
-        'x-rapidapi-key': "4622709193msh2b7cd6a6ebba26bp101347jsn0d99950ce664"
+        'x-rapidapi-key': os.getenv('API_key')
         }
     response = requests.request("GET", url+str(player1_id), headers=headers)
     print(response)
@@ -105,7 +109,7 @@ def run_bet_custom(request):
     querystring = {"page":"1","full_name":querry2,"per_page":"50"}
     headers = {
         'x-rapidapi-host': "nba-stats4.p.rapidapi.com",
-        'x-rapidapi-key': "4622709193msh2b7cd6a6ebba26bp101347jsn0d99950ce664"
+        'x-rapidapi-key': os.getenv('API_key')
         }
     response = requests.request("GET", url, headers=headers, params=querystring)
     print(response)
@@ -121,7 +125,7 @@ def run_bet_custom(request):
     url = "https://nba-stats4.p.rapidapi.com/per_game_career_regular_season/"
     headers = {
         'x-rapidapi-host': "nba-stats4.p.rapidapi.com",
-        'x-rapidapi-key': "4622709193msh2b7cd6a6ebba26bp101347jsn0d99950ce664"
+        'x-rapidapi-key': os.getenv('API_key')
         }
     response = requests.request("GET", url+str(player2_id), headers=headers)
     print(response)
@@ -254,7 +258,7 @@ def run_bet_random(request):
         querystring = {"page":"1","full_name":random_querry1,"per_page":"50"}
         headers = {
             'x-rapidapi-host': "nba-stats4.p.rapidapi.com",
-            'x-rapidapi-key': "4622709193msh2b7cd6a6ebba26bp101347jsn0d99950ce664"
+            'x-rapidapi-key': os.getenv('API_key')
             }
         response = requests.request("GET", url, headers=headers, params=querystring)
         print(response)
@@ -265,7 +269,7 @@ def run_bet_random(request):
         url = "https://nba-stats4.p.rapidapi.com/per_game_career_regular_season/"
         headers = {
             'x-rapidapi-host': "nba-stats4.p.rapidapi.com",
-            'x-rapidapi-key': "4622709193msh2b7cd6a6ebba26bp101347jsn0d99950ce664"
+            'x-rapidapi-key': os.getenv('API_key')
             }
         response = requests.request("GET", url+str(random_player1_id), headers=headers)
         print(response)
@@ -279,7 +283,7 @@ def run_bet_random(request):
         querystring = {"page":"1","full_name":random_querry2,"per_page":"50"}
         headers = {
             'x-rapidapi-host': "nba-stats4.p.rapidapi.com",
-            'x-rapidapi-key': "4622709193msh2b7cd6a6ebba26bp101347jsn0d99950ce664"
+            'x-rapidapi-key': os.getenv('API_key')
             }
         response = requests.request("GET", url, headers=headers, params=querystring)
         print(response)
@@ -290,7 +294,7 @@ def run_bet_random(request):
         url = "https://nba-stats4.p.rapidapi.com/per_game_career_regular_season/"
         headers = {
             'x-rapidapi-host': "nba-stats4.p.rapidapi.com",
-            'x-rapidapi-key': "4622709193msh2b7cd6a6ebba26bp101347jsn0d99950ce664"
+            'x-rapidapi-key': os.getenv('API_key')
             }
         response = requests.request("GET", url+str(random_player2_id), headers=headers)
         print(response)
