@@ -530,7 +530,6 @@ $RECYCLE.BIN/
 __pycache__/
 .vscode/
 venv/
-db.sqlite3
 group_project.pem
 
 
