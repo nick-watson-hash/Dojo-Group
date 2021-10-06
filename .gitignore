@@ -10,7 +10,6 @@
 *.pyc
 __pycache__/
 local_settings.py
-db.sqlite3
 db.sqlite3-journal
 media
 
@@ -526,6 +525,13 @@ $RECYCLE.BIN/
 *.zpaq
 # Archiver with a compression algorithm based on the Burrows-Wheeler transform method.
 *.zz
+
+
+__pycache__/
+.vscode/
+venv/
+db.sqlite3
+group_project.pem
 
 
 # End of https://www.toptal.com/developers/gitignore/api/compressedarchive
