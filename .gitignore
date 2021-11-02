@@ -1,7 +1,7 @@
 
 # Created by https://www.toptal.com/developers/gitignore/api/django,python,venv,macos,windows,visualstudiocode,openframeworks+visualstudio,jenv
 # Edit at https://www.toptal.com/developers/gitignore?templates=django,python,venv,macos,windows,visualstudiocode,openframeworks+visualstudio,jenv
-
+settings.py
 /my_environments/
 
 ### Django ###
